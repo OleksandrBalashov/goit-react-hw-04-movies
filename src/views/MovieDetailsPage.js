@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import Cast from '../components/Cast';
 import MoviesGenresListItem from '../components/MovieGenresListItem';
+import Reviews from '../components/Reviews';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -110,13 +111,18 @@ class MovieDetailsPage extends Component {
               </div>
             </div>
             <div>
-              <Route
-                path={`${path}/cast`}
-                render={props => {
-                  //   const { movieId } = props.match.params;
-                  return <Cast {...props} options={{ base_url, logo_sizes }} />;
-                }}
-              />
+              <Switch>
+                <Route
+                  path={`${path}/cast`}
+                  render={props => (
+                    <Cast {...props} options={{ base_url, logo_sizes }} />
+                  )}
+                />
+                <Route
+                  path={`${path}/reviews`}
+                  render={props => <Reviews {...props} />}
+                />
+              </Switch>
             </div>
           </>
         )}

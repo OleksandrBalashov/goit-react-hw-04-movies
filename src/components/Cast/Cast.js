@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CastListItem from '../CastListItem';
+import CastListItem from './CastListItem';
 
 class Cast extends Component {
   state = {
