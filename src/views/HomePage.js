@@ -20,25 +20,34 @@ class HomePage extends Component {
   async componentDidMount() {
     const {
       data: { results },
-    } = await axios.get('trending/movie/week');
+    } = await axios.get('trending/movie/day');
     console.log(results); //!
-    this.setState({ movies: results });
+
+    const {
+      data: { images },
+    } = await axios.get('/configuration');
+    const { base_url, logo_sizes } = images;
+
+    this.setState({
+      movies: results,
+      base_url,
+      logo_sizes: logo_sizes[4],
+    });
   }
 
   render() {
-    const { movies } = this.state;
+    const { movies, logo_sizes, base_url } = this.state;
+    const { url } = this.props.match;
 
     return (
       <div className="Wrap--HomeList">
-        <h2>Trending Today:</h2>
+        <h2 className="ListMoviesTitle">Trending Today:</h2>
         <ul className="ListMovies">
           {movies.length > 0 &&
-            movies.map(({ id, title }) => (
+            movies.map(({ id, title, poster_path }) => (
               <MoviesListItem
                 key={id}
-                id={id}
-                title={title}
-                options={this.props.match.url}
+                options={{ id, title, poster_path, url, logo_sizes, base_url }}
               />
             ))}
         </ul>

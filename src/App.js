@@ -7,8 +7,8 @@ import MoviesPage from './views/MoviesPage';
 const App = () => {
   return (
     <>
-      <header className="Header">
-        <ul className="Header-list" activeClassName="NavLink--active">
+      <header className="Header-Wrap">
+        <ul className="Header-list">
           <li>
             <NavLink
               exact
