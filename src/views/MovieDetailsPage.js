@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import Cast from '../components/Cast';
-import MoviesGenresListItem from '../components/MovieGenresListItem';
-import Reviews from '../components/Reviews';
+import MoviesGenresList from '../components/MovieDatails/MovieGenresList';
+import AudditionInformation from '../components/MovieDatails/AudditionInformation';
+import '../components/MovieDatails/MovieDetailsPage.scss';
+import Layout from '../components/Layout/Layout';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -29,8 +29,6 @@ class MovieDetailsPage extends Component {
       overview,
       genres,
     } = data;
-
-    // console.log(data);
 
     const {
       data: { images },
@@ -70,60 +68,34 @@ class MovieDetailsPage extends Component {
       genres,
     } = this.state;
 
-    const { path, url } = this.props.match;
-
     return (
       <>
         {title && (
           <>
-            <div className="Wrap-Movie">
-              <img src={`${base_url}${logo_sizes}${poster_path}`} alt="title" />
-              <div>
-                <h2>{`${title} (${this.editMovieRealise()})`}</h2>
-                <p>User Score: {`${this.editMovieAverage()}%`}</p>
-                <h3>Overview: </h3>
-                <p>{overview}</p>
-                <h4>Genres:</h4>
-                <ul className="GenresNamesList">
-                  {genres.map(({ name }) => (
-                    <MoviesGenresListItem key={name} name={name} />
-                  ))}
-                </ul>
+            <Layout>
+              <div className="ContainerMovie">
+                <div className="WrapMovie">
+                  <img
+                    src={`${base_url}${logo_sizes}${poster_path}`}
+                    alt="title"
+                  />
+                </div>
+
+                <div className="WrapMovieFields">
+                  <h2 className="MovieTitle MarginPadding">{`${title} (${this.editMovieRealise()})`}</h2>
+                  <p className="MovieScore MarginPadding">
+                    User Score: {`${this.editMovieAverage()}%`}
+                  </p>
+                  <h4 className="MovieGenres MarginPadding">Genres:</h4>
+                  <MoviesGenresList genres={genres} />
+                  <div>
+                    <h4 className="MarginPadding">Overview: </h4>
+                    <p className="MarginPadding">{overview}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="CastWrap">
-              <h3 className="CastTitle">Audditional information:</h3>
-              <div className="LinkCastWrap">
-                <NavLink
-                  to={`${url}/cast`}
-                  className="LinkCast"
-                  activeClassName="LinkCast--active"
-                >
-                  Cast
-                </NavLink>
-                <NavLink
-                  to={`${url}/reviews`}
-                  className="LinkCast"
-                  activeClassName="LinkCast--active"
-                >
-                  Reviews
-                </NavLink>
-              </div>
-            </div>
-            <div>
-              <Switch>
-                <Route
-                  path={`${path}/cast`}
-                  render={props => (
-                    <Cast {...props} options={{ base_url, logo_sizes }} />
-                  )}
-                />
-                <Route
-                  path={`${path}/reviews`}
-                  render={props => <Reviews {...props} />}
-                />
-              </Switch>
-            </div>
+            </Layout>
+            <AudditionInformation options={{ base_url, logo_sizes }} />
           </>
         )}
       </>

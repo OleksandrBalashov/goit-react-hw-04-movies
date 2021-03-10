@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import MoviesListItem from '../components/MoviesListItem';
+import MoviesList from '../components/Home/MoviesList';
+import '../components/Home/MoviesHome.scss';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'dd5d1869904b4aaed3590a927b3d890c';
@@ -8,8 +9,6 @@ const API_KEY = 'dd5d1869904b4aaed3590a927b3d890c';
 axios.defaults.baseURL = BASE_URL;
 axios.defaults.params = {
   api_key: API_KEY,
-  //   media_type: 'movie',
-  //   time_window: 'week',
 };
 
 class HomePage extends Component {
@@ -42,15 +41,9 @@ class HomePage extends Component {
     return (
       <div className="Wrap--HomeList">
         <h2 className="ListMoviesTitle">Trending Today:</h2>
-        <ul className="ListMovies">
-          {movies.length > 0 &&
-            movies.map(({ id, title, poster_path }) => (
-              <MoviesListItem
-                key={id}
-                options={{ id, title, poster_path, url, logo_sizes, base_url }}
-              />
-            ))}
-        </ul>
+        {movies.length > 0 && (
+          <MoviesList movies={movies} options={{ url, logo_sizes, base_url }} />
+        )}
       </div>
     );
   }

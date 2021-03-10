@@ -1,0 +1,38 @@
+.ContainerMovie {
+  display: flex;
+
+  padding-top: 50px;
+  padding-bottom: 30px;
+
+  .WrapMovie {
+    margin-right: 40px;
+    box-shadow: 6px 0px 11px 6px rgba(0, 0, 0, 0.75);
+  }
+}
+
+.MarginPadding {
+  margin: 0;
+  padding: 0;
+}
+
+.WrapMovieFields {
+  font-size: 20px;
+  width: 700px;
+
+  .MovieTitle {
+    padding-top: 20px;
+    margin-bottom: 40px;
+
+    font-size: 30px;
+  }
+
+  .MovieScore {
+    margin-bottom: 40px;
+
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .MovieGenres {
+    margin-bottom: 5px;
+  }
+}

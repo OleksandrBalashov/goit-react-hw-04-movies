@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CastListItem from './CastListItem';
+import CastList from './CastList';
 
 class Cast extends Component {
   state = {
@@ -15,7 +15,7 @@ class Cast extends Component {
       data: { cast },
     } = await axios.get(`/movie/${movieId}/credits`);
 
-    console.log(cast);
+    // console.log(cast);
     this.setState({ cast });
   }
 
@@ -25,20 +25,7 @@ class Cast extends Component {
     return (
       <>
         {cast.length > 0 && (
-          <ul className="CastActorsList">
-            {cast.map(({ id, profile_path, name, character }) => (
-              <CastListItem
-                key={id}
-                options={{
-                  profile_path,
-                  name,
-                  character,
-                  base_url,
-                  logo_sizes,
-                }}
-              />
-            ))}
-          </ul>
+          <CastList cast={cast} base_url={base_url} logo_sizes={logo_sizes} />
         )}
       </>
     );
