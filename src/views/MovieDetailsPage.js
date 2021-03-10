@@ -28,13 +28,16 @@ class MovieDetailsPage extends Component {
       vote_average,
       overview,
       genres,
+      backdrop_path,
     } = data;
 
     const {
       data: { images },
     } = await axios.get('/configuration');
+    console.log(data);
+    console.log(images);
 
-    const { logo_sizes, base_url } = images;
+    const { logo_sizes, base_url, backdrop_sizes } = images;
 
     this.setState({
       poster_path,
@@ -44,7 +47,9 @@ class MovieDetailsPage extends Component {
       overview,
       genres,
       base_url,
-      logo_sizes: logo_sizes[4],
+      backdrop_path,
+      backdrop_sizes: backdrop_sizes[3],
+      logo_sizes: logo_sizes[5],
     });
   }
 
@@ -66,35 +71,48 @@ class MovieDetailsPage extends Component {
       poster_path,
       overview,
       genres,
+      backdrop_path,
+      backdrop_sizes,
     } = this.state;
+
+    const bgImage = `${base_url}${backdrop_sizes}${backdrop_path}`;
+    console.log(bgImage);
 
     return (
       <>
         {title && (
           <>
-            <Layout>
-              <div className="ContainerMovie">
-                <div className="WrapMovie">
-                  <img
-                    src={`${base_url}${logo_sizes}${poster_path}`}
-                    alt="title"
-                  />
-                </div>
+            <div
+              style={{
+                backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${bgImage})`,
+              }}
+              className="Background"
+            >
+              <Layout>
+                <div className="ContainerMovie">
+                  <div className="WrapMovie">
+                    <img
+                      src={`${base_url}${logo_sizes}${poster_path}`}
+                      alt="title"
+                      className="MovieImg"
+                    />
+                  </div>
 
-                <div className="WrapMovieFields">
-                  <h2 className="MovieTitle MarginPadding">{`${title} (${this.editMovieRealise()})`}</h2>
-                  <p className="MovieScore MarginPadding">
-                    User Score: {`${this.editMovieAverage()}%`}
-                  </p>
-                  <h4 className="MovieGenres MarginPadding">Genres:</h4>
-                  <MoviesGenresList genres={genres} />
-                  <div>
-                    <h4 className="MarginPadding">Overview: </h4>
-                    <p className="MarginPadding">{overview}</p>
+                  <div className="WrapMovieFields">
+                    <h2 className="MovieTitle MarginPadding">{`${title} (${this.editMovieRealise()})`}</h2>
+                    <p className="MovieScore MarginPadding">
+                      User Score: {`${this.editMovieAverage()}%`}
+                    </p>
+                    <h4 className="MovieGenres MarginPadding">Genres:</h4>
+                    <MoviesGenresList genres={genres} />
+                    <div>
+                      <h4 className="MarginPadding">Overview: </h4>
+                      <p className="MarginPadding">{overview}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Layout>
+              </Layout>
+            </div>
             <AudditionInformation options={{ base_url, logo_sizes }} />
           </>
         )}

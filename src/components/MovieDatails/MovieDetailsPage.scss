@@ -4,15 +4,29 @@
   padding-top: 50px;
   padding-bottom: 30px;
 
+  color: rgba(255, 255, 255, 0.9);
+
   .WrapMovie {
     margin-right: 40px;
     box-shadow: 6px 0px 11px 6px rgba(0, 0, 0, 0.75);
+
+    .MovieImg {
+      width: 300px;
+      height: 450px;
+    }
   }
+}
+
+.Background {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .MarginPadding {
   margin: 0;
   padding: 0;
+  background-image: url();
 }
 
 .WrapMovieFields {
@@ -22,14 +36,14 @@
   .MovieTitle {
     padding-top: 20px;
     margin-bottom: 40px;
-
+    color: #ffffff;
     font-size: 30px;
   }
 
   .MovieScore {
     margin-bottom: 40px;
 
-    color: rgba(0, 0, 0, 0.6);
+    // color: rgba(0, 0, 0, 0.6);
   }
 
   .MovieGenres {
