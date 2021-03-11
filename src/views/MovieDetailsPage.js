@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import MoviesGenresList from '../components/MovieDatails/MovieGenresList';
 import AudditionInformation from '../components/MovieDatails/AudditionInformation';
-import '../components/MovieDatails/MovieDetailsPage.scss';
 import Layout from '../components/Layout/Layout';
+import '../components/MovieDatails/MovieDetailsPage.scss';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -75,7 +75,9 @@ class MovieDetailsPage extends Component {
       backdrop_sizes,
     } = this.state;
 
+    const imageSrc = `${base_url}${logo_sizes}${poster_path}`;
     const bgImage = `${base_url}${backdrop_sizes}${backdrop_path}`;
+
     console.log(bgImage);
 
     return (
@@ -91,11 +93,7 @@ class MovieDetailsPage extends Component {
               <Layout>
                 <div className="ContainerMovie">
                   <div className="WrapMovie">
-                    <img
-                      src={`${base_url}${logo_sizes}${poster_path}`}
-                      alt="title"
-                      className="MovieImg"
-                    />
+                    <img src={imageSrc} alt="title" className="MovieImg" />
                   </div>
 
                   <div className="WrapMovieFields">

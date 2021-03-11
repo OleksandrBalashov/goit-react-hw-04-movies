@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import routes from '../../../routes';
 
 const Navigation = () => (
   <ul className="Header-list">
     <li>
       <NavLink
         exact
-        to="/"
+        to={routes.home}
         className="NavLink"
         activeClassName="NavLink--active"
       >
@@ -15,7 +16,7 @@ const Navigation = () => (
     </li>
     <li>
       <NavLink
-        to="/movies"
+        to={routes.movies}
         className="NavLink"
         activeClassName="NavLink--active"
       >
