@@ -84,7 +84,7 @@ class MovieDetailsPage extends Component {
           <>
             <div
               style={{
-                backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${bgImage})`,
+                backgroundImage: `linear-gradient(to right, rgba(3, 37, 65, 0.7), rgba(3, 37, 65, 0.7)), url(${bgImage})`,
               }}
               className="Background"
             >
@@ -100,14 +100,15 @@ class MovieDetailsPage extends Component {
 
                   <div className="WrapMovieFields">
                     <h2 className="MovieTitle MarginPadding">{`${title} (${this.editMovieRealise()})`}</h2>
-                    <p className="MovieScore MarginPadding">
-                      User Score: {`${this.editMovieAverage()}%`}
-                    </p>
-                    <h4 className="MovieGenres MarginPadding">Genres:</h4>
+                    <div className="MovieScore MarginPadding">
+                      <span className="MovieScoreText">User Score: </span>
+                      <span className="MovieScorePoint">{`${this.editMovieAverage()}%`}</span>
+                    </div>
+                    <h4 className="MovieDescr MarginPadding">Genres:</h4>
                     <MoviesGenresList genres={genres} />
                     <div>
-                      <h4 className="MarginPadding">Overview: </h4>
-                      <p className="MarginPadding">{overview}</p>
+                      <h4 className="MarginPadding MovieDescr">Overview: </h4>
+                      <p className="MarginPadding MovieOverview">{overview}</p>
                     </div>
                   </div>
                 </div>

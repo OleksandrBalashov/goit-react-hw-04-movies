@@ -2,17 +2,19 @@
   display: flex;
 
   padding-top: 50px;
-  padding-bottom: 30px;
+  padding-bottom: 50px;
 
-  color: rgba(255, 255, 255, 0.9);
+  color: #ffffff;
 
   .WrapMovie {
     margin-right: 40px;
     box-shadow: 6px 0px 11px 6px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    overflow: hidden;
 
     .MovieImg {
-      width: 300px;
-      height: 450px;
+      max-width: 400px;
+      max-height: 500px;
     }
   }
 }
@@ -21,12 +23,12 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  margin-bottom: 20px;
 }
 
 .MarginPadding {
   margin: 0;
   padding: 0;
-  background-image: url();
 }
 
 .WrapMovieFields {
@@ -34,19 +36,41 @@
   width: 700px;
 
   .MovieTitle {
-    padding-top: 20px;
-    margin-bottom: 40px;
+    padding-top: 10px;
+    margin-bottom: 30px;
     color: #ffffff;
-    font-size: 30px;
+    font-size: 40px;
   }
 
   .MovieScore {
-    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
 
-    // color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+
+    .MovieScoreText {
+      margin-right: 10px;
+    }
+
+    .MovieScorePoint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 55px;
+      height: 55px;
+      background: rgba(5, 75, 133, 0.8);
+
+      border-radius: 50%;
+    }
   }
 
-  .MovieGenres {
-    margin-bottom: 5px;
+  .MovieDescr {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .MovieOverview {
+    font-size: 18px;
   }
 }
