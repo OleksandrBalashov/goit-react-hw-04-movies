@@ -1,37 +1,42 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import ReviewsListItem from './ReviewsListItem';
+import fetchApi from '../../services/fetchApi';
+import Spinner from '../Spinner';
+import ReviewsList from './ReviewsList';
 import ReviewsDefaultPage from './ReviewsDefaultPage';
 
 class Reviews extends Component {
   state = {
     results: [],
+    spinner: false,
   };
 
   async componentDidMount() {
     const { movieId } = this.props.match.params;
-    const {
-      data: { results },
-    } = await axios.get(`/movie/${movieId}/reviews`);
-    console.log(results);
+    this.toggleSpinner();
 
-    this.setState({ results });
+    try {
+      const results = await fetchApi.MovieReviews(movieId);
+
+      this.setState({ results });
+      this.toggleSpinner();
+    } catch (err) {}
   }
 
+  toggleSpinner = () => {
+    this.setState(({ spinner }) => ({ spinner: !spinner }));
+  };
+
   render() {
-    const { results } = this.state;
+    const { results, spinner } = this.state;
 
     return (
       <>
-        <ul>
-          {results.length !== 0 ? (
-            results.map(({ id, author, content }) => (
-              <ReviewsListItem key={id} options={{ author, content }} />
-            ))
-          ) : (
-            <ReviewsDefaultPage />
-          )}
-        </ul>
+        <Spinner isVisible={spinner} />
+        {results.length !== 0 ? (
+          <ReviewsList results={results} />
+        ) : (
+          <ReviewsDefaultPage />
+        )}
       </>
     );
   }

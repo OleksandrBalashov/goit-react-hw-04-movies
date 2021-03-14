@@ -1,0 +1,22 @@
+.WrapBtnLoadMore {
+  text-align: center;
+
+  .BtnLoadMore {
+    margin: 0;
+    padding: 15px;
+    border: none;
+    color: #ffffff;
+    border: 1px solid rgb(3, 37, 65);
+    border-radius: 15px;
+    background: rgb(3, 37, 65);
+    outline: none;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: rgb(17, 146, 252);
+      border: 1px solid rgb(17, 146, 252);
+      border-radius: 15px;
+    }
+  }
+}

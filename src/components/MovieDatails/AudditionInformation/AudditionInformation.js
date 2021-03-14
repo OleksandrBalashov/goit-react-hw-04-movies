@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, withRouter, Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Cast from '../../Cast';
 import Reviews from '../../Reviews';
 import './AudditionalInformation.scss';
@@ -47,6 +48,12 @@ const AudditionInformation = props => {
       </Switch>
     </>
   );
+};
+
+AudditionInformation.propTypes = {
+  props: PropTypes.shape({
+    options: PropTypes.objectOf(PropTypes.string).isRequired,
+  }),
 };
 
 export default withRouter(AudditionInformation);

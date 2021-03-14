@@ -1,5 +1,7 @@
-import axios from 'axios';
 import React, { Component } from 'react';
+import fetchApi from '../services/fetchApi';
+import Spinner from '../components/Spinner';
+import ErrorPage from './ErrorPage';
 import MoviesGenresList from '../components/MovieDatails/MovieGenresList';
 import AudditionInformation from '../components/MovieDatails/AudditionInformation';
 import Layout from '../components/Layout/Layout';
@@ -7,6 +9,8 @@ import '../components/MovieDatails/MovieDetailsPage.scss';
 
 class MovieDetailsPage extends Component {
   state = {
+    spinner: false,
+    error: false,
     // title: null,
     // base_url: null,
     // logo_sizes: null,
@@ -18,40 +22,51 @@ class MovieDetailsPage extends Component {
   };
 
   async componentDidMount() {
+    this.toggleSpinner();
     const { movieId } = this.props.match.params;
 
-    const { data } = await axios.get(`/movie/${movieId}`);
-    const {
-      poster_path,
-      release_date,
-      title,
-      vote_average,
-      overview,
-      genres,
-      backdrop_path,
-    } = data;
+    try {
+      const data = await fetchApi.Movie(movieId);
 
-    const {
-      data: { images },
-    } = await axios.get('/configuration');
-    console.log(data);
-    console.log(images);
+      const {
+        poster_path,
+        release_date,
+        title,
+        vote_average,
+        overview,
+        genres,
+        backdrop_path,
+      } = data;
 
-    const { logo_sizes, base_url, backdrop_sizes } = images;
+      const images = await fetchApi.Configuration();
 
-    this.setState({
-      poster_path,
-      release_date,
-      title,
-      vote_average,
-      overview,
-      genres,
-      base_url,
-      backdrop_path,
-      backdrop_sizes: backdrop_sizes[3],
-      logo_sizes: logo_sizes[5],
-    });
+      const { logo_sizes, base_url, backdrop_sizes } = images;
+
+      this.setState({
+        poster_path,
+        release_date,
+        title,
+        vote_average,
+        overview,
+        genres,
+        base_url,
+        backdrop_path,
+        backdrop_sizes: backdrop_sizes[3],
+        logo_sizes: logo_sizes[5],
+      });
+
+      this.toggleSpinner();
+    } catch (err) {
+      this.setState({
+        error: true,
+        spinner: false,
+      });
+    }
   }
+
+  toggleSpinner = () => {
+    this.setState(({ spinner }) => ({ spinner: !spinner }));
+  };
 
   editMovieRealise = () => {
     const { release_date } = this.state;
@@ -73,20 +88,22 @@ class MovieDetailsPage extends Component {
       genres,
       backdrop_path,
       backdrop_sizes,
+      spinner,
+      error,
     } = this.state;
 
     const imageSrc = `${base_url}${logo_sizes}${poster_path}`;
-    const bgImage = `${base_url}${backdrop_sizes}${backdrop_path}`;
-
-    console.log(bgImage);
+    const bgImageSrc = `${base_url}${backdrop_sizes}${backdrop_path}`;
 
     return (
       <>
+        <Spinner isVisible={spinner} />
+        {error && <ErrorPage />}
         {title && (
           <>
             <div
               style={{
-                backgroundImage: `linear-gradient(to right, rgba(3, 37, 65, 0.7), rgba(3, 37, 65, 0.7)), url(${bgImage})`,
+                backgroundImage: `linear-gradient(to right, rgba(3, 37, 65, 0.7), rgba(3, 37, 65, 0.7)), url(${bgImageSrc})`,
               }}
               className="Background"
             >

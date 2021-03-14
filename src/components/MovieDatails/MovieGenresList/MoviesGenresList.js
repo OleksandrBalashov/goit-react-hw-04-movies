@@ -1,14 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './MovieGenresList.scss';
 
-const MoviesGenresListItem = ({ genres }) => (
+const MoviesGenresList = ({ genres }) => (
   <ul className="GenresNamesList">
-    {genres.map(({ name }) => (
-      <li key={name} className="GenresItem">
+    {genres.map(({ id, name }) => (
+      <li key={id} className="GenresItem">
         {name}
       </li>
     ))}
   </ul>
 );
 
-export default MoviesGenresListItem;
+MoviesGenresList.propTypes = {
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
+};
+
+export default MoviesGenresList;

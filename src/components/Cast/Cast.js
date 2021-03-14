@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import fetchApi from '../../services/fetchApi';
 import CastList from './CastList';
+import Spinner from '../Spinner';
 
 class Cast extends Component {
   state = {
     cast: [],
+    spinner: false,
     ...this.props.options,
   };
 
   async componentDidMount() {
     const { movieId } = this.props.match.params;
+    this.toggleSpinner();
 
-    const {
-      data: { cast },
-    } = await axios.get(`/movie/${movieId}/credits`);
+    try {
+      const cast = await fetchApi.MovieCredits(movieId);
 
-    // console.log(cast);
-    this.setState({ cast });
+      this.setState({ cast });
+      this.toggleSpinner();
+    } catch {}
   }
 
+  toggleSpinner = () => {
+    this.setState(({ spinner }) => ({ spinner: !spinner }));
+  };
+
   render() {
-    const { cast, base_url, logo_sizes } = this.state;
+    const { cast, base_url, logo_sizes, spinner } = this.state;
 
     return (
       <>
+        <Spinner isVisible={spinner} />
         {cast.length > 0 && (
           <CastList cast={cast} base_url={base_url} logo_sizes={logo_sizes} />
         )}

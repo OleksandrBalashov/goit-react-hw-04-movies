@@ -1,0 +1,31 @@
+.ReviewsList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  margin: 15px;
+  padding: 0;
+
+  .ReviewsItem {
+    flex-basis: calc((100% - (8 * 15px)) / 4);
+    height: 300px;
+    overflow: auto;
+    margin: 15px;
+
+    .ReviewsAuthor {
+      margin: 0;
+      margin-bottom: 10px;
+      font-size: 22px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .ReviewsContent {
+      height: 200px;
+    }
+  }
+}
+
+.ReviewsDefaultPage {
+  font-size: 22px;
+  text-align: center;
+}
