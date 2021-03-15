@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import routes from '../../routes';
+// import routes from '../../routes';
+import AppRoutes from '../../routes/AppRoutes';
 import '../MoviesList/MoviesList.scss';
 
 const MoviesList = ({ movies, options: { logo_sizes, base_url } }) => (
@@ -12,9 +13,11 @@ const MoviesList = ({ movies, options: { logo_sizes, base_url } }) => (
       const defaultSrc =
         'https://media.comicbook.com/files/img/default-movie.png';
 
+      const { path } = AppRoutes[1];
+
       return (
         <li key={id} className="ListMoviesItem">
-          <NavLink to={`${routes.movies}/${id}`} className="LinkMovies">
+          <NavLink to={`${path}/${id}`} className="LinkMovies">
             <img
               src={poster_path ? imgSrc : defaultSrc}
               alt={title}

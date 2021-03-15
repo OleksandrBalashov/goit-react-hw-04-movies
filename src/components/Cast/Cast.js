@@ -33,7 +33,7 @@ class Cast extends Component {
       <>
         <Spinner isVisible={spinner} />
         {cast.length > 0 && (
-          <CastList cast={cast} base_url={base_url} logo_sizes={logo_sizes} />
+          <CastList options={{ cast, base_url, logo_sizes }} />
         )}
       </>
     );

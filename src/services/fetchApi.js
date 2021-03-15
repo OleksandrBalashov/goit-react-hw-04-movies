@@ -62,11 +62,15 @@ const MovieReviews = async id => {
 };
 
 const SearchMovie = async (query, page) => {
-  const { data } = await axios.get('/search/movie', {
-    params: { query, page },
-  });
+  try {
+    const { data } = await axios.get('/search/movie', {
+      params: { query, page },
+    });
 
-  return data;
+    return data;
+  } catch (err) {
+    throw err;
+  }
 };
 
 const fetcApi = {

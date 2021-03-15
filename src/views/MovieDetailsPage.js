@@ -2,26 +2,30 @@ import React, { Component } from 'react';
 import fetchApi from '../services/fetchApi';
 import Spinner from '../components/Spinner';
 import ErrorPage from './ErrorPage';
-import MoviesGenresList from '../components/MovieDatails/MovieGenresList';
-import AudditionInformation from '../components/MovieDatails/AudditionInformation';
+import MoviesGenresList from '../components/MovieGenresList';
+import AudditionInformation from '../components/AudditionInformation';
 import Layout from '../components/Layout/Layout';
 import './stylesViews/MovieDetailsPage.scss';
 
 class MovieDetailsPage extends Component {
   state = {
+    title: null,
+    base_url: null,
+    logo_sizes: null,
+    poster_path: null,
+    release_date: null,
+    vote_average: null,
+    overview: null,
+    genres: null,
     spinner: false,
     error: false,
-    // title: null,
-    // base_url: null,
-    // logo_sizes: null,
-    // poster_path: null,
-    // release_date: null,
-    // vote_average: null,
-    // overview: null,
-    // genres: null,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetchMovieDetails();
+  }
+
+  fetchMovieDetails = async () => {
     this.toggleSpinner();
     const { movieId } = this.props.match.params;
 
@@ -62,7 +66,7 @@ class MovieDetailsPage extends Component {
         spinner: false,
       });
     }
-  }
+  };
 
   toggleSpinner = () => {
     this.setState(({ spinner }) => ({ spinner: !spinner }));

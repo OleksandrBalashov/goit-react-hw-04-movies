@@ -18,9 +18,14 @@
 }
 
 .LinkCastWrap {
-  display: flex;
+  .NavList {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 
-  .LinkCast {
+  .NavLink {
     display: block;
     width: 100px;
     padding: 15px 5px;
@@ -39,7 +44,7 @@
     }
   }
 
-  .LinkCast--active {
+  .NavLink--active {
     color: rgb(17, 146, 252);
   }
 }

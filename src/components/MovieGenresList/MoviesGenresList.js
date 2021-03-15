@@ -15,8 +15,8 @@ const MoviesGenresList = ({ genres }) => (
 MoviesGenresList.propTypes = {
   genres: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };

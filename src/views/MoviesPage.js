@@ -17,6 +17,14 @@ class MoviesPage extends Component {
     error: false,
   };
 
+  componentDidMount = () => {
+    const searchQuery = this.props.location.state;
+
+    if (searchQuery) {
+      this.setState({ ...searchQuery });
+    }
+  };
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovie();
@@ -67,7 +75,6 @@ class MoviesPage extends Component {
   };
 
   handleSubmit = searchQuery => {
-    console.log(searchQuery);
     this.setState({ ...searchQuery, page: 1, results: [] });
   };
 
@@ -76,9 +83,14 @@ class MoviesPage extends Component {
 
     const { pathname } = this.props.location;
 
-    this.props.history.push(
-      `${pathname}?query=${searchQuery}&page=${page - 1}`,
-    );
+    this.props.history.push({
+      pathname,
+      search: `query=${searchQuery}&page=${page - 1}`,
+      // hash: `${page - 1}`,
+      state: {
+        searchQuery,
+      },
+    });
   };
 
   render() {

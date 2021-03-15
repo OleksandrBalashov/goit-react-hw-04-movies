@@ -1,9 +1,11 @@
 import React from 'react';
-import { NavLink, withRouter, Switch, Route } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Cast from '../../Cast';
-import Reviews from '../../Reviews';
+import Cast from '../Cast';
+import Reviews from '../Reviews';
 import './AudditionalInformation.scss';
+import Navigation from '../Navigation';
+import AudditionalRoutes from '../../routes/AudditionalRoutes';
 
 const AudditionInformation = props => {
   const {
@@ -17,20 +19,7 @@ const AudditionInformation = props => {
       <div className="CastWrap">
         <h3 className="CastTitle">Audditional information:</h3>
         <div className="LinkCastWrap">
-          <NavLink
-            to={`${url}/cast`}
-            className="LinkCast"
-            activeClassName="LinkCast--active"
-          >
-            Cast
-          </NavLink>
-          <NavLink
-            to={`${url}/reviews`}
-            className="LinkCast"
-            activeClassName="LinkCast--active"
-          >
-            Reviews
-          </NavLink>
+          <Navigation routes={AudditionalRoutes} match={url} />
         </div>
       </div>
 
