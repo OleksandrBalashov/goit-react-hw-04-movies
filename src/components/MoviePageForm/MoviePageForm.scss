@@ -1,0 +1,55 @@
+.WrapForm {
+  //   height: 250px;
+  padding-top: 30px;
+  text-align: center;
+  //   background-image: url('https://wallpaperaccess.com/full/85019.jpg');
+  //   background-position: center;
+  //   background-attachment: fixed;
+  //   background-repeat: no-repeat;
+  //   background-size: cover;
+
+  .FormLabel {
+    margin-right: 10px;
+  }
+
+  .FormInput {
+    width: 600px;
+    padding: 15px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+    outline: none;
+
+    box-shadow: 4px 4px 8px 9px rgba(3, 37, 65, 0.7);
+
+    &:hover,
+    &:focus {
+      border: 1px solid rgb(17, 146, 252);
+    }
+
+    &:not(:placeholder-shown) {
+      border: 1px solid rgb(17, 146, 252);
+    }
+  }
+
+  .BtnSubmit {
+    width: 150px;
+
+    margin: 0;
+    padding: 15px;
+    border: 0;
+    color: #ffffff;
+
+    background: rgb(3, 37, 65);
+    border: 2px solid rgb(3, 37, 65);
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px 9px rgba(3, 37, 65, 0.7);
+    outline: none;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: rgb(17, 146, 252);
+    }
+  }
+}

@@ -5,7 +5,7 @@ import MoviesList from '../components/MoviesList';
 import Spinner from '../components/Spinner';
 import BtnLoadMore from '../components/BtnLoadMore';
 import ErrorPage from './ErrorPage';
-
+import './stylesViews/MoviePage.scss';
 class MoviesPage extends Component {
   state = {
     searchQuery: '',
@@ -36,6 +36,7 @@ class MoviesPage extends Component {
       );
 
       if (results.length === 0) {
+        this.toggleSpinner();
         this.setState({ error: true });
         return;
       }
@@ -72,9 +73,11 @@ class MoviesPage extends Component {
 
   createPathName = () => {
     const { searchQuery, page } = this.state;
+
     const { pathname } = this.props.location;
+
     this.props.history.push(
-      `${pathname}?query=${searchQuery}/page=${page - 1}`,
+      `${pathname}?query=${searchQuery}&page=${page - 1}`,
     );
   };
 
@@ -94,7 +97,7 @@ class MoviesPage extends Component {
     const shoudRenderBtnLoadMore = shoudRenderMovieList && page !== total_pages;
 
     return (
-      <>
+      <div className="WrapMoviePage">
         <MoviePageForm onSubmitForm={this.handleSubmit} />
 
         {shoudRenderMovieList && (
@@ -105,7 +108,7 @@ class MoviesPage extends Component {
 
         {shoudRenderBtnLoadMore && <BtnLoadMore onClick={this.fetchMovie} />}
         {error && <ErrorPage />}
-      </>
+      </div>
     );
   }
 }

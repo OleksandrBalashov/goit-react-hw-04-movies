@@ -5,7 +5,7 @@ import ErrorPage from './ErrorPage';
 import MoviesGenresList from '../components/MovieDatails/MovieGenresList';
 import AudditionInformation from '../components/MovieDatails/AudditionInformation';
 import Layout from '../components/Layout/Layout';
-import '../components/MovieDatails/MovieDetailsPage.scss';
+import './stylesViews/MovieDetailsPage.scss';
 
 class MovieDetailsPage extends Component {
   state = {

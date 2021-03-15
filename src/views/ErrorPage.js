@@ -1,4 +1,5 @@
 import React from 'react';
+import './stylesViews/ErrorPage.scss';
 
 const ErrorPage = () => {
   return (

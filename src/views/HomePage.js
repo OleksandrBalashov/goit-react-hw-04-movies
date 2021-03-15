@@ -3,6 +3,7 @@ import fetchApi from '../services/fetchApi';
 import MoviesList from '../components/MoviesList';
 import BtnLoadMore from '../components/BtnLoadMore';
 import Spinner from '../components/Spinner';
+import './stylesViews/HomePage.scss';
 
 class HomePage extends Component {
   state = {
