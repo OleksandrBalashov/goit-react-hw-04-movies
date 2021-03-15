@@ -2,8 +2,8 @@ import React from 'react';
 
 const ErrorPage = () => {
   return (
-    <div>
-      <h1>404 Page no found</h1>
+    <div className="ErrorWrap">
+      <h1>404 Page not found</h1>
     </div>
   );
 };
