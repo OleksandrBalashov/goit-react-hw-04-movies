@@ -18,10 +18,7 @@ class MoviesPage extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.searchQuery !== this.state.searchQuery ||
-      prevState.page !== this.state.page
-    ) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovie();
     }
   }
@@ -33,24 +30,30 @@ class MoviesPage extends Component {
     try {
       this.toggleSpinner();
 
-      const results = await fetchApi.SearchMovie(searchQuery, page);
-
-      // ! MUST DO TOTAL PAGE
+      const { results, total_pages } = await fetchApi.SearchMovie(
+        searchQuery,
+        page,
+      );
 
       if (results.length === 0) {
         this.setState({ error: true });
+        return;
       }
 
       const { base_url, logo_sizes } = await fetchApi.Configuration();
 
-      this.setState(prev => ({ results: [...prev.results, ...results] }));
+      this.setState({
+        total_pages,
+        base_url,
+        logo_sizes: logo_sizes[4],
+      });
 
-      if (!this.state.base_url) {
-        this.setState({
-          base_url,
-          logo_sizes: logo_sizes[4],
-        });
-      }
+      this.setState(prev => ({
+        results: [...prev.results, ...results],
+        page: prev.page + 1,
+      }));
+
+      this.createPathName();
 
       this.toggleSpinner();
     } catch (err) {
@@ -58,36 +61,49 @@ class MoviesPage extends Component {
     }
   };
 
-  handleBtnLoadMoreClick = () => {
-    this.setState(({ page }) => ({ page: page + 1 }));
-  };
-
   toggleSpinner = () => {
     this.setState(({ spinner }) => ({ spinner: !spinner }));
   };
 
   handleSubmit = searchQuery => {
-    this.setState({ ...searchQuery });
-    const { searchQuery: query } = searchQuery;
+    console.log(searchQuery);
+    this.setState({ ...searchQuery, page: 1, results: [] });
+  };
 
+  createPathName = () => {
+    const { searchQuery, page } = this.state;
     const { pathname } = this.props.location;
-    this.props.history.push(`${pathname}?query=${query}`);
+    this.props.history.push(
+      `${pathname}?query=${searchQuery}/page=${page - 1}`,
+    );
   };
 
   render() {
-    const { results, base_url, logo_sizes, spinner, error } = this.state;
-    const shoudRender = results.length !== 0 && !error;
+    const {
+      results,
+      base_url,
+      logo_sizes,
+      spinner,
+      error,
+      page,
+      total_pages,
+    } = this.state;
+
+    const shoudRenderMovieList = results.length !== 0 && !error;
+
+    const shoudRenderBtnLoadMore = shoudRenderMovieList && page !== total_pages;
+
     return (
       <>
         <MoviePageForm onSubmitForm={this.handleSubmit} />
 
-        {shoudRender && (
+        {shoudRenderMovieList && (
           <MoviesList movies={results} options={{ base_url, logo_sizes }} />
         )}
 
         <Spinner isVisible={spinner} />
 
-        {shoudRender && <BtnLoadMore onClick={this.handleBtnLoadMoreClick} />}
+        {shoudRenderBtnLoadMore && <BtnLoadMore onClick={this.fetchMovie} />}
         {error && <ErrorPage />}
       </>
     );

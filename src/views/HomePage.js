@@ -15,12 +15,6 @@ class HomePage extends Component {
     this.fetchMovies();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.page !== this.state.page) {
-      this.fetchMovies();
-    }
-  }
-
   fetchMovies = async () => {
     this.toggleSpinner();
     const { page } = this.state;
@@ -38,8 +32,9 @@ class HomePage extends Component {
         logo_sizes: logo_sizes[4],
       });
 
-      this.setState(({ movies }) => ({
+      this.setState(({ movies, page }) => ({
         movies: [...movies, ...results],
+        page: page + 1,
       }));
 
       this.toggleSpinner();
@@ -51,12 +46,6 @@ class HomePage extends Component {
   toggleSpinner = () => {
     this.setState(({ spinner }) => ({
       spinner: !spinner,
-    }));
-  };
-
-  handleBtnLoadMore = () => {
-    this.setState(({ page }) => ({
-      page: page + 1,
     }));
   };
 
@@ -76,12 +65,12 @@ class HomePage extends Component {
       <div className="Wrap--HomeList">
         <h2 className="ListMoviesTitle">Trending Today:</h2>
         {movies.length === 0 && <Spinner />}
-        {movies.length > 0 && (
+        {movies.length !== 0 && (
           <>
             <MoviesList movies={movies} options={{ logo_sizes, base_url }} />
             <Spinner isVisible={spinner} />
             {ShoudRenderLoadMoreBtn && (
-              <BtnLoadMore onClick={this.handleBtnLoadMore} />
+              <BtnLoadMore onClick={this.fetchMovies} />
             )}
           </>
         )}
