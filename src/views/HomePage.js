@@ -10,10 +10,15 @@ class HomePage extends Component {
     results: [],
     page: 1,
     spinner: false,
+    isLoading: false,
   };
 
   componentDidMount() {
     this.fetchMovies();
+  }
+
+  componentWillUnmount() {
+    this.setState({ isLoading: true });
   }
 
   fetchMovies = async () => {
@@ -27,18 +32,22 @@ class HomePage extends Component {
       const images = await FetchApi.Configuration();
       const { logo_sizes, base_url } = images;
 
-      this.setState({
-        base_url,
-        total_pages,
-        logo_sizes: logo_sizes[4],
-      });
+      const { isLoading } = this.state;
 
-      this.setState(({ results: prev, page }) => ({
-        results: [...prev, ...results],
-        page: page + 1,
-      }));
+      !isLoading &&
+        this.setState({
+          base_url,
+          total_pages,
+          logo_sizes: logo_sizes[4],
+        });
 
-      this.toggleSpinner();
+      !isLoading &&
+        this.setState(({ results: prev, page }) => ({
+          results: [...prev, ...results],
+          page: page + 1,
+        }));
+
+      !isLoading && this.toggleSpinner();
     } catch (err) {
       this.toggleSpinner();
     }
@@ -64,10 +73,10 @@ class HomePage extends Component {
 
     return (
       <div className="Wrap--HomeList">
-        <h2 className="ListMoviesTitle">Trending Today:</h2>
         {results.length === 0 && <Spinner />}
         {results.length !== 0 && (
           <>
+            <h2 className="ListMoviesTitle">Trending Today:</h2>
             <MoviesList options={{ results, logo_sizes, base_url }} />
             <Spinner isVisible={spinner} />
             {ShoudRenderButton && (

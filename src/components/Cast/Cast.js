@@ -7,6 +7,7 @@ class Cast extends Component {
   state = {
     cast: [],
     spinner: false,
+    isLoading: false,
     ...this.props.options,
   };
 
@@ -14,7 +15,9 @@ class Cast extends Component {
     this.fetchCast();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.setState({ isLoading: true });
+  }
 
   fetchCast = async () => {
     const { movieId } = this.props.match.params;
@@ -22,9 +25,10 @@ class Cast extends Component {
 
     try {
       const cast = await FetchApi.MovieCredits(movieId);
+      const { isLoading } = this.state;
 
-      this.setState({ cast });
-      this.toggleSpinner();
+      !isLoading && this.setState({ cast });
+      !isLoading && this.toggleSpinner();
     } catch {}
   };
 

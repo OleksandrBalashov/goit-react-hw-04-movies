@@ -16,11 +16,11 @@ class MoviesPage extends Component {
     logo_sizes: null,
     spinner: false,
     error: false,
+    isLoading: false,
   };
 
   componentDidMount() {
     const searchQuery = this.props.location.state;
-    console.log(searchQuery);
 
     if (searchQuery) {
       this.setState({ ...searchQuery });
@@ -31,6 +31,10 @@ class MoviesPage extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovie();
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({ isLoading: true });
   }
 
   fetchMovie = async () => {
@@ -52,21 +56,24 @@ class MoviesPage extends Component {
       }
 
       const { base_url, logo_sizes } = await FetchApi.Configuration();
+      const { isLoading } = this.state;
 
-      this.setState({
-        total_pages,
-        base_url,
-        logo_sizes: logo_sizes[4],
-      });
+      !isLoading &&
+        this.setState({
+          total_pages,
+          base_url,
+          logo_sizes: logo_sizes[4],
+        });
 
-      this.setState(prev => ({
-        results: [...prev.results, ...results],
-        page: prev.page + 1,
-      }));
+      !isLoading &&
+        this.setState(prev => ({
+          results: [...prev.results, ...results],
+          page: prev.page + 1,
+        }));
 
       this.createPathName();
 
-      this.toggleSpinner();
+      !isLoading && this.toggleSpinner();
     } catch (err) {
       this.toggleSpinner();
     }

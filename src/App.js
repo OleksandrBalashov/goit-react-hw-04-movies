@@ -15,10 +15,12 @@ const App = () => {
     <>
       <AppBar />
       <NavigationRoute routes={AppRoutes} />
+
       {/* <Switch>
         <Route exact path={routes.home} component={HomePage} />
         <Route path={routes.movieDetail} component={MovieDetailsPage} />
         <Route path={routes.movie} component={MoviesPage} />
+
         <Route component={ErrorPage} />
       </Switch> */}
     </>

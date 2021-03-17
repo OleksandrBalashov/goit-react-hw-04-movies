@@ -22,17 +22,24 @@ class MovieDetailsPage extends Component {
     error: false,
     from: '',
     searchQuery: '',
+    isLoading: false,
   };
 
   componentDidMount() {
-    const { pathname, state } = this.props.location.state.from;
+    // const { pathname, state } = this.props.location.state.from;
     // console.log(pathname);
     // console.log(state);
-    if (pathname) {
+    const { state } = this.props.location;
+    if (state?.from) {
+      const { pathname, state } = this.props.location.state.from;
       this.setState({ from: pathname, searchQuery: state });
     }
 
     this.fetchMovieDetails();
+  }
+
+  componentWillUnmount() {
+    this.setState({ isLoading: true });
   }
 
   fetchMovieDetails = async () => {
@@ -56,20 +63,23 @@ class MovieDetailsPage extends Component {
 
       const { logo_sizes, base_url, backdrop_sizes } = images;
 
-      this.setState({
-        poster_path,
-        release_date,
-        title,
-        vote_average,
-        overview,
-        genres,
-        base_url,
-        backdrop_path,
-        backdrop_sizes: backdrop_sizes[3],
-        logo_sizes: logo_sizes[5],
-      });
+      const { isLoading } = this.state;
 
-      this.toggleSpinner();
+      !isLoading &&
+        this.setState({
+          poster_path,
+          release_date,
+          title,
+          vote_average,
+          overview,
+          genres,
+          base_url,
+          backdrop_path,
+          backdrop_sizes: backdrop_sizes[3],
+          logo_sizes: logo_sizes[5],
+        });
+
+      !isLoading && this.toggleSpinner();
     } catch (err) {
       this.setState({
         error: true,

@@ -1,41 +1,44 @@
-// import ErrorPage from '../views/ErrorPage';
-import HomePage from '../views/HomePage';
-import MovieDetailsPage from '../views/MovieDetailsPage';
-import MoviesPage from '../views/MoviesPage';
+import { lazy } from 'react';
 
 const AppRoutes = [
   {
     name: 'Home',
     path: '/',
     exact: true,
-    route: true,
     navLink: true,
-    component: HomePage,
+    component: lazy(() =>
+      import('../views/HomePage' /* webpackChunkName: "HomeView" */),
+    ),
   },
   {
     name: 'Movies',
     path: '/movies',
     exact: true,
-    route: true,
     navLink: true,
-    component: MoviesPage,
+    component: lazy(() =>
+      import('../views/MoviesPage' /* webpackChunkName: "MoviesView" */),
+    ),
   },
   {
     name: 'MovieDetailes',
     path: '/movies/:movieId',
-    exact: true,
+    exact: false,
     navLink: false,
-    route: true,
-    component: MovieDetailsPage,
+    component: lazy(() =>
+      import(
+        '../views/MovieDetailsPage' /* webpackChunkName: "MovieDetailesView" */
+      ),
+    ),
   },
-  // {
-  //   name: 'Error',
-  //   path: null,
-  //   exact: null,
-  //   navLink: false,
-  //   route: true,
-  //   component: ErrorPage,
-  // },
+  {
+    name: 'Error',
+    exact: false,
+    path: ' ',
+    navLink: false,
+    component: lazy(() =>
+      import('../views/ErrorPage' /* webpackChunkName: "ErrorView" */),
+    ),
+  },
 ];
 
 export default AppRoutes;

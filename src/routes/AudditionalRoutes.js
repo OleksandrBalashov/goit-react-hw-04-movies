@@ -1,22 +1,23 @@
-import Cast from '../components/Cast';
-import Reviews from '../components/Reviews';
+import { lazy } from 'react';
 
 const AudditionalRoutes = [
   {
     name: 'Cast',
     path: '/cast',
-    exact: false,
-    route: true,
+    exact: true,
     navLink: true,
-    component: Cast,
+    component: lazy(() =>
+      import('../components/Cast' /* webpackChunkName: "CastView" */),
+    ),
   },
   {
     name: 'Reviews',
     path: '/reviews',
-    exact: false,
-    route: true,
+    exact: true,
     navLink: true,
-    component: Reviews,
+    component: lazy(() =>
+      import('../components/Reviews' /* webpackChunkName: "ReviewsView" */),
+    ),
   },
 ];
 
