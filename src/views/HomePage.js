@@ -72,7 +72,7 @@ class HomePage extends Component {
     const ShoudRenderButton = !spinner && page !== total_pages;
 
     return (
-      <div className="Wrap--HomeList">
+      <div className="WrapHomeList">
         {results.length === 0 && <Spinner />}
         {results.length !== 0 && (
           <>

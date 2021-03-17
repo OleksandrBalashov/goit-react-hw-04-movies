@@ -7,7 +7,9 @@ const AudditionalRoutes = [
     exact: true,
     navLink: true,
     component: lazy(() =>
-      import('../components/Cast' /* webpackChunkName: "CastView" */),
+      import(
+        '../components/AudditionaIInformation/Cast' /* webpackChunkName: "CastView" */
+      ),
     ),
   },
   {
@@ -16,7 +18,9 @@ const AudditionalRoutes = [
     exact: true,
     navLink: true,
     component: lazy(() =>
-      import('../components/Reviews' /* webpackChunkName: "ReviewsView" */),
+      import(
+        '../components/AudditionaIInformation/Reviews' /* webpackChunkName: "ReviewsView" */
+      ),
     ),
   },
 ];

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import FetchApi from '../services/FetchApi';
 import Spinner from '../components/Spinner';
 import ErrorPage from './ErrorPage';
-import MoviesGenresList from '../components/MovieGenresList';
-import AudditionInformation from '../components/AudditionaIInformation';
+import AudditionalInformation from '../components/AudditionaIInformation';
 import Layout from '../components/Layout/Layout';
-import './stylesViews/MovieDetailsPage.scss';
 import Button from '../components/Button';
+import MovieFields from '../components/MovieFilelds';
+import './stylesViews/MovieDetailsPage.scss';
 
+const defaultSrc = 'https://media.comicbook.com/files/img/default-movie.png';
 class MovieDetailsPage extends Component {
   state = {
     title: null,
@@ -30,6 +31,7 @@ class MovieDetailsPage extends Component {
     // console.log(pathname);
     // console.log(state);
     const { state } = this.props.location;
+
     if (state?.from) {
       const { pathname, state } = this.props.location.state.from;
       this.setState({ from: pathname, searchQuery: state });
@@ -103,14 +105,7 @@ class MovieDetailsPage extends Component {
   };
 
   handleGoBackClick = () => {
-    const {
-      history,
-      // location: { state },
-    } = this.props;
-    // console.log(state);
-
-    // const fromState = state?.from;
-    // console.log(fromState);
+    const { history } = this.props;
 
     const { from, searchQuery } = this.state;
 
@@ -132,6 +127,7 @@ class MovieDetailsPage extends Component {
       backdrop_sizes,
       spinner,
       error,
+      from,
     } = this.state;
 
     const imageSrc = `${base_url}${logo_sizes}${poster_path}`;
@@ -149,30 +145,30 @@ class MovieDetailsPage extends Component {
               }}
               className="Background"
             >
-              <Button text={'<'} onClick={this.handleGoBackClick} />
+              <Button
+                text={'<'}
+                disabled={!from && true}
+                onClick={this.handleGoBackClick}
+              />
               <Layout>
                 <div className="ContainerMovie">
                   <div className="WrapMovie">
-                    <img src={imageSrc} alt="title" className="MovieImg" />
+                    <img
+                      src={poster_path ? imageSrc : defaultSrc}
+                      alt="title"
+                      className="MovieImg"
+                    />
                   </div>
 
-                  <div className="WrapMovieFields">
-                    <h2 className="MovieTitle MarginPadding">{`${title} (${this.editMovieRealise()})`}</h2>
-                    <div className="MovieScore MarginPadding">
-                      <span className="MovieScoreText">User Score: </span>
-                      <span className="MovieScorePoint">{`${this.editMovieAverage()}%`}</span>
-                    </div>
-                    <h4 className="MovieDescr MarginPadding">Genres:</h4>
-                    <MoviesGenresList genres={genres} />
-                    <div>
-                      <h4 className="MarginPadding MovieDescr">Overview: </h4>
-                      <p className="MarginPadding MovieOverview">{overview}</p>
-                    </div>
-                  </div>
+                  <MovieFields
+                    realise={this.editMovieRealise()}
+                    average={this.editMovieAverage()}
+                    options={{ genres, title, overview }}
+                  />
                 </div>
               </Layout>
             </div>
-            <AudditionInformation options={{ base_url, logo_sizes }} />
+            <AudditionalInformation options={{ base_url, logo_sizes }} />
           </>
         )}
       </>

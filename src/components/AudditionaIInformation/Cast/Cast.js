@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FetchApi from '../../services/FetchApi';
+import FetchApi from '../../../services/FetchApi';
 import CastList from './CastList';
-import Spinner from '../Spinner';
+import Spinner from '../../Spinner';
 
 class Cast extends Component {
   state = {

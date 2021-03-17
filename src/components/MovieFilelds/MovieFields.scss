@@ -1,0 +1,48 @@
+.MarginPadding {
+  margin: 0;
+  padding: 0;
+}
+
+.WrapMovieFields {
+  font-size: 20px;
+  width: 700px;
+
+  .MovieTitle {
+    padding-top: 10px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-size: 39px;
+  }
+
+  .MovieScore {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    .MovieScoreText {
+      margin-right: 10px;
+    }
+
+    .MovieScorePoint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 55px;
+      height: 55px;
+      background: rgba(5, 75, 133, 0.8);
+
+      border-radius: 50%;
+    }
+  }
+
+  .MovieDescr {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .MovieOverview {
+    font-size: 18px;
+  }
+}

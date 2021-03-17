@@ -1,12 +1,11 @@
-.CastWrap {
+.AudditionalWrap {
   display: flex;
   align-items: center;
-  // border-top: 1px solid rgba(0, 0, 0, 0.3);
   text-align: center;
   color: #000000;
   margin-bottom: 20px;
 
-  .CastTitle {
+  .AudditionaTitle {
     display: block;
     font-size: 25px;
     font-weight: 600;
@@ -17,7 +16,7 @@
   }
 }
 
-.LinkCastWrap {
+.AudditionalWrapLink {
   .NavList {
     display: flex;
     margin: 0;

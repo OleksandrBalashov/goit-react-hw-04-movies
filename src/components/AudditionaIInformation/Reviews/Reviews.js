@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FetchApi from '../../services/FetchApi';
-import Spinner from '../Spinner';
+import FetchApi from '../../../services/FetchApi';
+import Spinner from '../../Spinner';
 import ReviewsList from './ReviewsList';
 import ReviewsDefaultPage from './ReviewsDefaultPage';
 

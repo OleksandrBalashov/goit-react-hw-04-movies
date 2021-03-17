@@ -28,6 +28,17 @@
         color: rgb(17, 146, 252);
         background: rgb(3, 37, 65);
       }
+
+      &[disabled] {
+        background-color: transparent;
+        color: grey;
+
+        &:hover,
+        &:focus {
+          cursor: inherit;
+          border: none;
+        }
+      }
     }
   }
 }
@@ -41,63 +52,17 @@
   color: #ffffff;
 
   .WrapMovie {
+    max-width: 350px;
+    max-height: 500px;
     margin-right: 40px;
     box-shadow: 6px 0px 11px 6px rgba(0, 0, 0, 0.75);
     border-radius: 10px;
     overflow: hidden;
 
     .MovieImg {
-      max-width: 400px;
-      max-height: 500px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-  }
-}
-
-.MarginPadding {
-  margin: 0;
-  padding: 0;
-}
-
-.WrapMovieFields {
-  font-size: 20px;
-  width: 700px;
-
-  .MovieTitle {
-    padding-top: 10px;
-    margin-bottom: 30px;
-    color: #ffffff;
-    font-size: 40px;
-  }
-
-  .MovieScore {
-    display: flex;
-    align-items: center;
-
-    margin-bottom: 20px;
-
-    .MovieScoreText {
-      margin-right: 10px;
-    }
-
-    .MovieScorePoint {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 55px;
-      height: 55px;
-      background: rgba(5, 75, 133, 0.8);
-
-      border-radius: 50%;
-    }
-  }
-
-  .MovieDescr {
-    font-size: 22px;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-
-  .MovieOverview {
-    font-size: 18px;
   }
 }
