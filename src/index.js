@@ -4,7 +4,6 @@ import 'modern-normalize/modern-normalize.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

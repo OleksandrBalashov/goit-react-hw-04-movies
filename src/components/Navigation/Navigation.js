@@ -5,18 +5,21 @@ import PropTypes from 'prop-types';
 const Navigation = ({ routes, match = '' }) => (
   <nav>
     <ul className="NavList">
-      {routes.map(({ name, path, exact }) => (
-        <li key={path} className="NavListItem">
-          <NavLink
-            exact={exact}
-            to={`${match}${path}`}
-            className="NavLink"
-            activeClassName="NavLink--active"
-          >
-            {name}
-          </NavLink>
-        </li>
-      ))}
+      {routes.map(
+        ({ name, path, exact, navLink }) =>
+          navLink && (
+            <li key={path} className="NavListItem">
+              <NavLink
+                exact={exact}
+                to={`${match}${path}`}
+                className="NavLink"
+                activeClassName="NavLink--active"
+              >
+                {name}
+              </NavLink>
+            </li>
+          ),
+      )}
     </ul>
   </nav>
 );

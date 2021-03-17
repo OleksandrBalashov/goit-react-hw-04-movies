@@ -1,11 +1,12 @@
 import React from 'react';
-import { withRouter, Switch, Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Cast from '../Cast';
-import Reviews from '../Reviews';
+// import Cast from '../Cast';
+// import Reviews from '../Reviews';
 import './AudditionalInformation.scss';
 import Navigation from '../Navigation';
 import AudditionalRoutes from '../../routes/AudditionalRoutes';
+import NavigationRoute from '../Navigation/NavigationRoute';
 
 const AudditionInformation = props => {
   const {
@@ -23,7 +24,7 @@ const AudditionInformation = props => {
         </div>
       </div>
 
-      <Switch>
+      {/* <Switch>
         <Route
           path={`${path}/cast`}
           render={props => (
@@ -34,7 +35,12 @@ const AudditionInformation = props => {
           path={`${path}/reviews`}
           render={props => <Reviews {...props} />}
         />
-      </Switch>
+      </Switch> */}
+      <NavigationRoute
+        routes={AudditionalRoutes}
+        match={path}
+        options={{ base_url, logo_sizes }}
+      />
     </>
   );
 };

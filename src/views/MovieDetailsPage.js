@@ -3,7 +3,7 @@ import FetchApi from '../services/FetchApi';
 import Spinner from '../components/Spinner';
 import ErrorPage from './ErrorPage';
 import MoviesGenresList from '../components/MovieGenresList';
-import AudditionInformation from '../components/AudditionInformation';
+import AudditionInformation from '../components/AudditionaIInformation';
 import Layout from '../components/Layout/Layout';
 import './stylesViews/MovieDetailsPage.scss';
 import Button from '../components/Button';
