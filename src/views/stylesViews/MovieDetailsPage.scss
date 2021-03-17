@@ -1,8 +1,35 @@
 .Background {
+  position: relative;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   margin-bottom: 20px;
+
+  .WrapButton {
+    position: absolute;
+    top: 20px;
+    left: 22px;
+
+    .Button {
+      padding: 10px;
+      padding-right: 12px;
+      padding-top: 6px;
+
+      font-size: 30px;
+      text-align: center;
+
+      color: #ffffff;
+      background: rgba(3, 37, 65, 0.6);
+
+      border: none;
+
+      &:hover,
+      &:focus {
+        color: rgb(17, 146, 252);
+        background: rgb(3, 37, 65);
+      }
+    }
+  }
 }
 
 .ContainerMovie {

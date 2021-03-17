@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import fetchApi from '../services/fetchApi.js';
+import FetchApi from '../services/FetchApi.js';
 import MoviePageForm from '../components/MoviePageForm';
 import MoviesList from '../components/MoviesList';
 import Spinner from '../components/Spinner';
-import BtnLoadMore from '../components/BtnLoadMore';
+import Button from '../components/Button';
 import ErrorPage from './ErrorPage';
 import './stylesViews/MoviePage.scss';
+
 class MoviesPage extends Component {
   state = {
     searchQuery: '',
@@ -17,13 +18,14 @@ class MoviesPage extends Component {
     error: false,
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     const searchQuery = this.props.location.state;
+    console.log(searchQuery);
 
     if (searchQuery) {
       this.setState({ ...searchQuery });
     }
-  };
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
@@ -38,7 +40,7 @@ class MoviesPage extends Component {
     try {
       this.toggleSpinner();
 
-      const { results, total_pages } = await fetchApi.SearchMovie(
+      const { results, total_pages } = await FetchApi.SearchMovie(
         searchQuery,
         page,
       );
@@ -49,7 +51,7 @@ class MoviesPage extends Component {
         return;
       }
 
-      const { base_url, logo_sizes } = await fetchApi.Configuration();
+      const { base_url, logo_sizes } = await FetchApi.Configuration();
 
       this.setState({
         total_pages,
@@ -106,19 +108,21 @@ class MoviesPage extends Component {
 
     const shoudRenderMovieList = results.length !== 0 && !error;
 
-    const shoudRenderBtnLoadMore = shoudRenderMovieList && page !== total_pages;
+    const shoudRenderButton = shoudRenderMovieList && page !== total_pages;
 
     return (
       <div className="WrapMoviePage">
         <MoviePageForm onSubmitForm={this.handleSubmit} />
 
         {shoudRenderMovieList && (
-          <MoviesList movies={results} options={{ base_url, logo_sizes }} />
+          <MoviesList options={{ results, base_url, logo_sizes }} />
         )}
 
         <Spinner isVisible={spinner} />
 
-        {shoudRenderBtnLoadMore && <BtnLoadMore onClick={this.fetchMovie} />}
+        {shoudRenderButton && (
+          <Button onClick={this.fetchMovie} text={'Load More'} />
+        )}
         {error && <ErrorPage />}
       </div>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetchApi from '../../services/fetchApi';
+import FetchApi from '../../services/FetchApi';
 import CastList from './CastList';
 import Spinner from '../Spinner';
 
@@ -10,17 +10,23 @@ class Cast extends Component {
     ...this.props.options,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetchCast();
+  }
+
+  componentWillUnmount() {}
+
+  fetchCast = async () => {
     const { movieId } = this.props.match.params;
     this.toggleSpinner();
 
     try {
-      const cast = await fetchApi.MovieCredits(movieId);
+      const cast = await FetchApi.MovieCredits(movieId);
 
       this.setState({ cast });
       this.toggleSpinner();
     } catch {}
-  }
+  };
 
   toggleSpinner = () => {
     this.setState(({ spinner }) => ({ spinner: !spinner }));

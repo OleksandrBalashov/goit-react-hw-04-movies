@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import fetchApi from '../services/fetchApi';
+import FetchApi from '../services/FetchApi';
 import MoviesList from '../components/MoviesList';
-import BtnLoadMore from '../components/BtnLoadMore';
+import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import './stylesViews/HomePage.scss';
 
 class HomePage extends Component {
   state = {
-    movies: [],
+    results: [],
     page: 1,
     spinner: false,
   };
@@ -21,10 +21,10 @@ class HomePage extends Component {
     const { page } = this.state;
 
     try {
-      const movies = await fetchApi.TrendingMovies(page);
+      const movies = await FetchApi.TrendingMovies(page);
       const { results, total_pages } = movies;
 
-      const images = await fetchApi.Configuration();
+      const images = await FetchApi.Configuration();
       const { logo_sizes, base_url } = images;
 
       this.setState({
@@ -33,8 +33,8 @@ class HomePage extends Component {
         logo_sizes: logo_sizes[4],
       });
 
-      this.setState(({ movies, page }) => ({
-        movies: [...movies, ...results],
+      this.setState(({ results: prev, page }) => ({
+        results: [...prev, ...results],
         page: page + 1,
       }));
 
@@ -52,7 +52,7 @@ class HomePage extends Component {
 
   render() {
     const {
-      movies,
+      results,
       logo_sizes,
       base_url,
       spinner,
@@ -60,18 +60,18 @@ class HomePage extends Component {
       page,
     } = this.state;
 
-    const ShoudRenderLoadMoreBtn = !spinner && page !== total_pages;
+    const ShoudRenderButton = !spinner && page !== total_pages;
 
     return (
       <div className="Wrap--HomeList">
         <h2 className="ListMoviesTitle">Trending Today:</h2>
-        {movies.length === 0 && <Spinner />}
-        {movies.length !== 0 && (
+        {results.length === 0 && <Spinner />}
+        {results.length !== 0 && (
           <>
-            <MoviesList movies={movies} options={{ logo_sizes, base_url }} />
+            <MoviesList options={{ results, logo_sizes, base_url }} />
             <Spinner isVisible={spinner} />
-            {ShoudRenderLoadMoreBtn && (
-              <BtnLoadMore onClick={this.fetchMovies} />
+            {ShoudRenderButton && (
+              <Button onClick={this.fetchMovies} text={'Load More'} />
             )}
           </>
         )}

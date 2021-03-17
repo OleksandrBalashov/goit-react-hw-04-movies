@@ -73,7 +73,7 @@ const SearchMovie = async (query, page) => {
   }
 };
 
-const fetcApi = {
+const FetchApi = {
   TrendingMovies,
   Configuration,
   Movie,
@@ -82,4 +82,4 @@ const fetcApi = {
   SearchMovie,
 };
 
-export default fetcApi;
+export default FetchApi;

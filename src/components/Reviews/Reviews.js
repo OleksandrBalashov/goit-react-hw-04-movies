@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetchApi from '../../services/fetchApi';
+import FetchApi from '../../services/FetchApi';
 import Spinner from '../Spinner';
 import ReviewsList from './ReviewsList';
 import ReviewsDefaultPage from './ReviewsDefaultPage';
@@ -10,17 +10,23 @@ class Reviews extends Component {
     spinner: false,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetchReviews();
+  }
+
+  componentWillUnmount() {}
+
+  fetchReviews = async () => {
     const { movieId } = this.props.match.params;
     this.toggleSpinner();
 
     try {
-      const results = await fetchApi.MovieReviews(movieId);
+      const results = await FetchApi.MovieReviews(movieId);
 
       this.setState({ results });
       this.toggleSpinner();
     } catch (err) {}
-  }
+  };
 
   toggleSpinner = () => {
     this.setState(({ spinner }) => ({ spinner: !spinner }));

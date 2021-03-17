@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import fetchApi from '../services/fetchApi';
+import FetchApi from '../services/FetchApi';
 import Spinner from '../components/Spinner';
 import ErrorPage from './ErrorPage';
 import MoviesGenresList from '../components/MovieGenresList';
 import AudditionInformation from '../components/AudditionInformation';
 import Layout from '../components/Layout/Layout';
 import './stylesViews/MovieDetailsPage.scss';
+import Button from '../components/Button';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -19,9 +20,18 @@ class MovieDetailsPage extends Component {
     genres: null,
     spinner: false,
     error: false,
+    from: '',
+    searchQuery: '',
   };
 
   componentDidMount() {
+    const { pathname, state } = this.props.location.state.from;
+    // console.log(pathname);
+    // console.log(state);
+    if (pathname) {
+      this.setState({ from: pathname, searchQuery: state });
+    }
+
     this.fetchMovieDetails();
   }
 
@@ -30,7 +40,7 @@ class MovieDetailsPage extends Component {
     const { movieId } = this.props.match.params;
 
     try {
-      const data = await fetchApi.Movie(movieId);
+      const data = await FetchApi.Movie(movieId);
 
       const {
         poster_path,
@@ -42,7 +52,7 @@ class MovieDetailsPage extends Component {
         backdrop_path,
       } = data;
 
-      const images = await fetchApi.Configuration();
+      const images = await FetchApi.Configuration();
 
       const { logo_sizes, base_url, backdrop_sizes } = images;
 
@@ -82,6 +92,24 @@ class MovieDetailsPage extends Component {
     return +vote_average * 10;
   };
 
+  handleGoBackClick = () => {
+    const {
+      history,
+      // location: { state },
+    } = this.props;
+    // console.log(state);
+
+    // const fromState = state?.from;
+    // console.log(fromState);
+
+    const { from, searchQuery } = this.state;
+
+    history.push({
+      pathname: from,
+      state: searchQuery,
+    });
+  };
+
   render() {
     const {
       title,
@@ -111,6 +139,7 @@ class MovieDetailsPage extends Component {
               }}
               className="Background"
             >
+              <Button text={'<'} onClick={this.handleGoBackClick} />
               <Layout>
                 <div className="ContainerMovie">
                   <div className="WrapMovie">
