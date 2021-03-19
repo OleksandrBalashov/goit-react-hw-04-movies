@@ -29,7 +29,7 @@ class Reviews extends Component {
 
       !this.isLoading && this.setState({ results });
       !this.isLoading && this.toggleSpinner();
-    } catch (err) {}
+    } catch {}
   };
 
   toggleSpinner = () => {

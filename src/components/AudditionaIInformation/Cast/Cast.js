@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import FetchApi from '../../../services/FetchApi';
 import CastList from './CastList';
 import Spinner from '../../Spinner';
+import NotFound from '../../NotFound';
+import PropTypes from 'prop-types';
 
 class Cast extends Component {
   state = {
     cast: [],
     spinner: false,
-
+    err: false,
     ...this.props.options,
   };
 
@@ -28,7 +30,7 @@ class Cast extends Component {
     try {
       const cast = await FetchApi.MovieCredits(movieId);
 
-      !this.isLoading && this.setState({ cast });
+      !this.isLoading && (await this.setState({ cast }));
       !this.isLoading && this.toggleSpinner();
     } catch {}
   };
@@ -43,12 +45,19 @@ class Cast extends Component {
     return (
       <>
         <Spinner isVisible={spinner} />
-        {cast.length > 0 && (
+
+        {cast.length > 0 ? (
           <CastList options={{ cast, base_url, logo_sizes }} />
+        ) : (
+          !spinner && <NotFound />
         )}
       </>
     );
   }
 }
+
+Cast.propTypes = {
+  options: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+};
 
 export default Cast;

@@ -31,12 +31,13 @@ class MovieDetailsPage extends Component {
     const { state, pathname } = this.props.location;
     const { movieId } = this.props.match.params;
 
-    if (
+    const result =
       pathname !== `/movies/${movieId}` &&
       pathname !== `/movies/${movieId}/cast` &&
-      pathname !== `/movies/${movieId}/reviews`
-    ) {
-      this.props.history.push('/');
+      pathname !== `/movies/${movieId}/reviews`;
+
+    if (result) {
+      this.backHomePage();
     }
 
     if (state?.from) {
@@ -54,6 +55,11 @@ class MovieDetailsPage extends Component {
   fetchMovieDetails = async () => {
     this.toggleSpinner();
     const { movieId } = this.props.match.params;
+
+    if (!Number(movieId)) {
+      this.backHomePage();
+      return;
+    }
 
     try {
       const data = await FetchApi.Movie(movieId);
@@ -85,19 +91,20 @@ class MovieDetailsPage extends Component {
           backdrop_sizes: backdrop_sizes[3],
           logo_sizes: logo_sizes[5],
         });
-
-      !this.isLoading && this.toggleSpinner();
     } catch (err) {
       const { status } = err.response;
-      console.log(err);
-      // await this.setState({
-      //   error: true,
-      //   spinner: false,
-      // });
+
       if (status === 404) {
-        this.props.history.push('/');
+        this.backHomePage();
       }
     }
+
+    !this.isLoading && this.toggleSpinner();
+  };
+
+  backHomePage = () => {
+    const { history } = this.props;
+    history.push('/');
   };
 
   toggleSpinner = () => {

@@ -72,16 +72,9 @@ class MoviesPage extends Component {
         }));
 
       this.createPathName();
+    } catch {}
 
-      !this.isLoading && this.toggleSpinner();
-    } catch (err) {
-      this.toggleSpinner();
-      // console.dir(err);
-
-      // if (err.status_code === 34) {
-      //   this.history.push('/');
-      // }
-    }
+    !this.isLoading && this.toggleSpinner();
   };
 
   toggleSpinner = () => {

@@ -15,6 +15,15 @@ class HomePage extends Component {
   isLoading = false;
 
   componentDidMount() {
+    const {
+      history,
+      location: { pathname },
+    } = this.props;
+
+    if (pathname.length > 1) {
+      history.push('/');
+    }
+
     this.fetchMovies();
   }
 
@@ -45,12 +54,9 @@ class HomePage extends Component {
           results: [...prev, ...results],
           page: page + 1,
         }));
+    } catch {}
 
-      !this.isLoading && this.toggleSpinner();
-    } catch (err) {
-
-      this.toggleSpinner();
-    }
+    !this.isLoading && this.toggleSpinner();
   };
 
   toggleSpinner = () => {
