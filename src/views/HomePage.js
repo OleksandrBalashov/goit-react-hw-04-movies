@@ -10,15 +10,16 @@ class HomePage extends Component {
     results: [],
     page: 1,
     spinner: false,
-    isLoading: false,
   };
+
+  isLoading = false;
 
   componentDidMount() {
     this.fetchMovies();
   }
 
   componentWillUnmount() {
-    this.setState({ isLoading: true });
+    this.isLoading = true;
   }
 
   fetchMovies = async () => {
@@ -32,23 +33,22 @@ class HomePage extends Component {
       const images = await FetchApi.Configuration();
       const { logo_sizes, base_url } = images;
 
-      const { isLoading } = this.state;
-
-      !isLoading &&
+      !this.isLoading &&
         this.setState({
           base_url,
           total_pages,
           logo_sizes: logo_sizes[4],
         });
 
-      !isLoading &&
+      !this.isLoading &&
         this.setState(({ results: prev, page }) => ({
           results: [...prev, ...results],
           page: page + 1,
         }));
 
-      !isLoading && this.toggleSpinner();
+      !this.isLoading && this.toggleSpinner();
     } catch (err) {
+
       this.toggleSpinner();
     }
   };

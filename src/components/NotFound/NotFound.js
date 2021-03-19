@@ -1,7 +1,7 @@
 import React from 'react';
-import './stylesViews/ErrorPage.scss';
+import './NotFound.scss';
 
-const ErrorPage = () => {
+const NotFound = () => {
   return (
     <div className="ErrorWrap">
       <h1>404 Page not found</h1>
@@ -9,4 +9,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default NotFound;

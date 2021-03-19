@@ -4,7 +4,7 @@ import MoviePageForm from '../components/MoviePageForm';
 import MoviesList from '../components/MoviesList';
 import Spinner from '../components/Spinner';
 import Button from '../components/Button';
-import ErrorPage from './ErrorPage';
+import NotFound from '../components/NotFound';
 import './stylesViews/MoviePage.scss';
 
 class MoviesPage extends Component {
@@ -16,8 +16,9 @@ class MoviesPage extends Component {
     logo_sizes: null,
     spinner: false,
     error: false,
-    isLoading: false,
   };
+
+  isLoading = false;
 
   componentDidMount() {
     const searchQuery = this.props.location.state;
@@ -29,12 +30,12 @@ class MoviesPage extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
-      this.fetchMovie();
+      this.fetchMovie().catch(err => console.dir(err));
     }
   }
 
   componentWillUnmount() {
-    this.setState({ isLoading: true });
+    this.isLoading = true;
   }
 
   fetchMovie = async () => {
@@ -56,16 +57,15 @@ class MoviesPage extends Component {
       }
 
       const { base_url, logo_sizes } = await FetchApi.Configuration();
-      const { isLoading } = this.state;
 
-      !isLoading &&
+      !this.isLoading &&
         this.setState({
           total_pages,
           base_url,
           logo_sizes: logo_sizes[4],
         });
 
-      !isLoading &&
+      !this.isLoading &&
         this.setState(prev => ({
           results: [...prev.results, ...results],
           page: prev.page + 1,
@@ -73,9 +73,14 @@ class MoviesPage extends Component {
 
       this.createPathName();
 
-      !isLoading && this.toggleSpinner();
+      !this.isLoading && this.toggleSpinner();
     } catch (err) {
       this.toggleSpinner();
+      // console.dir(err);
+
+      // if (err.status_code === 34) {
+      //   this.history.push('/');
+      // }
     }
   };
 
@@ -95,7 +100,6 @@ class MoviesPage extends Component {
     this.props.history.push({
       pathname,
       search: `query=${searchQuery}&page=${page - 1}`,
-      // hash: `${page - 1}`,
       state: {
         searchQuery,
       },
@@ -130,7 +134,7 @@ class MoviesPage extends Component {
         {shoudRenderButton && (
           <Button onClick={this.fetchMovie} text={'Load More'} />
         )}
-        {error && <ErrorPage />}
+        {error && <NotFound />}
       </div>
     );
   }

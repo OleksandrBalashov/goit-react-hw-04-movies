@@ -8,7 +8,7 @@ const NavigationRoute = ({ routes, match = '', ...options }) => {
       <Switch>
         {routes.map(({ name, exact, path, component: MyComponent }) => {
           if (name === 'Error') {
-            return <Route key={path} render={() => <MyComponent />} />;
+            return <Route key={name} component={MyComponent} />;
           }
           return (
             <Route

@@ -8,15 +8,16 @@ class Reviews extends Component {
   state = {
     results: [],
     spinner: false,
-    isLoading: false,
   };
+
+  isLoading = false;
 
   componentDidMount() {
     this.fetchReviews();
   }
 
   componentWillUnmount() {
-    this.setState({ isLoading: true });
+    this.isLoading = true;
   }
 
   fetchReviews = async () => {
@@ -25,10 +26,9 @@ class Reviews extends Component {
 
     try {
       const results = await FetchApi.MovieReviews(movieId);
-      const { isLoading } = this.state;
 
-      !isLoading && this.setState({ results });
-      !isLoading && this.toggleSpinner();
+      !this.isLoading && this.setState({ results });
+      !this.isLoading && this.toggleSpinner();
     } catch (err) {}
   };
 

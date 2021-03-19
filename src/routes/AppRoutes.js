@@ -33,10 +33,10 @@ const AppRoutes = [
   {
     name: 'Error',
     exact: false,
-    path: ' ',
+    path: '',
     navLink: false,
     component: lazy(() =>
-      import('../views/ErrorPage' /* webpackChunkName: "ErrorView" */),
+      import('../views/HomePage' /* webpackChunkName: "HomeViewDefault" */),
     ),
   },
 ];

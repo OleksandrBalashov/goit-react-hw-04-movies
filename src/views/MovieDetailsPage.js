@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FetchApi from '../services/FetchApi';
 import Spinner from '../components/Spinner';
-import ErrorPage from './ErrorPage';
+import NotFound from '../components/NotFound';
 import AudditionalInformation from '../components/AudditionaIInformation';
 import Layout from '../components/Layout/Layout';
 import Button from '../components/Button';
@@ -23,14 +23,21 @@ class MovieDetailsPage extends Component {
     error: false,
     from: '',
     searchQuery: '',
-    isLoading: false,
   };
 
+  isLoading = false;
+
   componentDidMount() {
-    // const { pathname, state } = this.props.location.state.from;
-    // console.log(pathname);
-    // console.log(state);
-    const { state } = this.props.location;
+    const { state, pathname } = this.props.location;
+    const { movieId } = this.props.match.params;
+
+    if (
+      pathname !== `/movies/${movieId}` &&
+      pathname !== `/movies/${movieId}/cast` &&
+      pathname !== `/movies/${movieId}/reviews`
+    ) {
+      this.props.history.push('/');
+    }
 
     if (state?.from) {
       const { pathname, state } = this.props.location.state.from;
@@ -41,7 +48,7 @@ class MovieDetailsPage extends Component {
   }
 
   componentWillUnmount() {
-    this.setState({ isLoading: true });
+    this.isLoading = true;
   }
 
   fetchMovieDetails = async () => {
@@ -65,9 +72,7 @@ class MovieDetailsPage extends Component {
 
       const { logo_sizes, base_url, backdrop_sizes } = images;
 
-      const { isLoading } = this.state;
-
-      !isLoading &&
+      !this.isLoading &&
         this.setState({
           poster_path,
           release_date,
@@ -81,12 +86,17 @@ class MovieDetailsPage extends Component {
           logo_sizes: logo_sizes[5],
         });
 
-      !isLoading && this.toggleSpinner();
+      !this.isLoading && this.toggleSpinner();
     } catch (err) {
-      this.setState({
-        error: true,
-        spinner: false,
-      });
+      const { status } = err.response;
+      console.log(err);
+      // await this.setState({
+      //   error: true,
+      //   spinner: false,
+      // });
+      if (status === 404) {
+        this.props.history.push('/');
+      }
     }
   };
 
@@ -136,7 +146,7 @@ class MovieDetailsPage extends Component {
     return (
       <>
         <Spinner isVisible={spinner} />
-        {error && <ErrorPage />}
+        {error && <NotFound />}
         {title && (
           <>
             <div
