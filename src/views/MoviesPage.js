@@ -16,21 +16,26 @@ class MoviesPage extends Component {
     logo_sizes: null,
     spinner: false,
     error: false,
+    btnLoadMore: true,
   };
 
   isLoading = false;
 
   componentDidMount() {
-    const searchQuery = this.props.location.state;
+    const { state: searchQuery, search, hash } = this.props.location;
 
-    if (searchQuery) {
-      this.setState({ ...searchQuery });
+    if (hash !== '' && hash !== this.state.page) {
+      this.props.history.push('/');
     }
+
+    searchQuery
+      ? this.setState({ ...searchQuery })
+      : this.setState({ searchQuery: search.slice(7) });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
-      this.fetchMovie().catch(err => console.dir(err));
+      this.fetchMovie();
     }
   }
 
@@ -54,6 +59,10 @@ class MoviesPage extends Component {
         this.toggleSpinner();
         this.setState({ error: true });
         return;
+      }
+
+      if (results.length > 0 && results.length < 19) {
+        this.setState({ btnLoadMore: false });
       }
 
       const { base_url, logo_sizes } = await FetchApi.Configuration();
@@ -92,7 +101,9 @@ class MoviesPage extends Component {
 
     this.props.history.push({
       pathname,
-      search: `query=${searchQuery}&page=${page - 1}`,
+
+      hash: `${page - 1}`,
+      search: `query=${searchQuery}`,
       state: {
         searchQuery,
       },
@@ -108,11 +119,13 @@ class MoviesPage extends Component {
       error,
       page,
       total_pages,
+      btnLoadMore,
     } = this.state;
 
     const shoudRenderMovieList = results.length !== 0 && !error;
 
-    const shoudRenderButton = shoudRenderMovieList && page !== total_pages;
+    const shoudRenderButton =
+      shoudRenderMovieList && page !== total_pages && btnLoadMore;
 
     return (
       <div className="WrapMoviePage">
