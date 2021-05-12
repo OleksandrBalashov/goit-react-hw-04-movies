@@ -1,15 +1,23 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import AppRoutes from '../../routes/AppRoutes';
 import '../MoviesList/MoviesList.scss';
+import { ResultsType } from '../../interfscesTypes/interfaces';
 
 const defaultSrc = 'https://media.comicbook.com/files/img/default-movie.png';
+
+interface Props extends RouteComponentProps {
+  options: {
+    results: ResultsType[];
+    logo_sizes: string;
+    base_url: string;
+  };
+}
 
 const MoviesList = ({
   location,
   options: { results, logo_sizes, base_url },
-}) => (
+}: Props) => (
   <ul className="ListMovies">
     {results.map(({ id, title, poster_path }) => {
       const imgSrc = `${base_url}${logo_sizes}${poster_path}`;
@@ -38,19 +46,5 @@ const MoviesList = ({
     })}
   </ul>
 );
-
-MoviesList.propTypes = {
-  options: PropTypes.shape({
-    results: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        poster_path: PropTypes.string,
-      }),
-    ),
-    logo_sizes: PropTypes.string.isRequired,
-    base_url: PropTypes.string.isRequired,
-  }),
-};
 
 export default withRouter(MoviesList);

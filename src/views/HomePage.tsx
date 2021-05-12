@@ -1,15 +1,42 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import FetchApi from '../services/FetchApi';
 import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import './stylesViews/HomePage.scss';
+import { ResultsType } from '../interfscesTypes/interfaces';
 
-class HomePage extends Component {
-  state = {
+interface Props extends RouteComponentProps<any> {
+  initialState: {
+    page: number;
+    spinner: boolean;
+  };
+}
+
+interface State {
+  results: ResultsType[];
+  page: number;
+  spinner: boolean;
+  total_pages: number;
+  logo_sizes: string;
+  base_url: string;
+}
+
+class HomePage extends Component<Props, State> {
+  static defaultProps = {
+    initailState: {
+      page: 1,
+      spinner: false,
+    },
+  };
+
+  state: State = {
+    total_pages: 0,
     results: [],
-    page: 1,
-    spinner: false,
+    logo_sizes: '',
+    base_url: '',
+    ...this.props.initialState,
   };
 
   isLoading = false;
@@ -38,6 +65,7 @@ class HomePage extends Component {
     try {
       const movies = await FetchApi.TrendingMovies(page);
       const { results, total_pages } = movies;
+      console.log(results);
 
       const images = await FetchApi.Configuration();
       const { logo_sizes, base_url } = images;

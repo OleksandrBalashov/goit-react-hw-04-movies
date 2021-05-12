@@ -1,8 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './Button.scss';
 
-const Button = ({ onClick, text, disabled }) => (
+interface Props {
+  text: string;
+  disabled?: boolean;
+  onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
+}
+
+const Button = ({ onClick, text, disabled }: Props) => (
   <div className="WrapButton">
     <button
       type="button"
@@ -14,11 +19,5 @@ const Button = ({ onClick, text, disabled }) => (
     </button>
   </div>
 );
-
-Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-};
 
 export default Button;

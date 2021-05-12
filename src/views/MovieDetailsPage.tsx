@@ -1,28 +1,61 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { Location } from 'history';
+import { StaticContext } from 'react-router';
 import FetchApi from '../services/FetchApi';
 import Spinner from '../components/Spinner';
 import NotFound from '../components/NotFound';
 import AudditionalInformation from '../components/AudditionaIInformation';
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/Layout';
 import Button from '../components/Button';
 import MovieFields from '../components/MovieFilelds';
 import './stylesViews/MovieDetailsPage.scss';
 
 const defaultSrc = 'https://media.comicbook.com/files/img/default-movie.png';
-class MovieDetailsPage extends Component {
+
+interface Paramses {
+  movieId: string;
+}
+
+// type LocationState = {
+//   from: Location;
+// };
+
+interface Props extends RouteComponentProps<Paramses> {}
+
+interface State {
+  title: string;
+  spinner: boolean;
+  base_url: string;
+  logo_sizes: string;
+  poster_path: string;
+  release_date: string;
+  vote_average: string;
+  overview: string;
+  backdrop_path: string;
+  backdrop_sizes: string;
+  genres: (string & number)[] | null;
+  from: string;
+  searchQuery: string;
+  error: boolean;
+}
+
+class MovieDetailsPage extends Component<Props, State> {
   state = {
-    title: null,
-    base_url: null,
-    logo_sizes: null,
-    poster_path: null,
-    release_date: null,
-    vote_average: null,
-    overview: null,
+    title: '',
+    base_url: '',
+    logo_sizes: '',
+    poster_path: '',
+    release_date: '',
+    vote_average: '',
+    backdrop_sizes: '',
+    overview: '',
+    backdrop_path: '',
     genres: null,
-    spinner: false,
-    error: false,
     from: '',
     searchQuery: '',
+    spinner: false,
+    error: false,
   };
 
   isLoading = false;
@@ -40,8 +73,9 @@ class MovieDetailsPage extends Component {
       this.backHomePage();
     }
 
-    if (state?.from) {
-      const { pathname, state } = this.props.location.state.from;
+    if (state !== null) {
+      //(state.from !== null)
+      const { pathname, state } = this.props.location.state as any;
       this.setState({ from: pathname, searchQuery: state });
     }
 
@@ -118,7 +152,7 @@ class MovieDetailsPage extends Component {
 
   editMovieAverage = () => {
     const { vote_average } = this.state;
-    return +vote_average * 10;
+    return Number(vote_average) * 10;
   };
 
   handleGoBackClick = () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FetchApi from '../services/FetchApi.js';
+import FetchApi from '../services/FetchApi';
 import MoviePageForm from '../components/MoviePageForm';
 import MoviesList from '../components/MoviesList';
 import Spinner from '../components/Spinner';

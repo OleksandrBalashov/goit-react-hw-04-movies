@@ -28,7 +28,7 @@ const Configuration = async () => {
   }
 };
 
-const Movie = async id => {
+const Movie = async (id: string)=> {
   try {
     const { data } = await axios.get(`/movie/${id}`);
     return data;
@@ -37,7 +37,7 @@ const Movie = async id => {
   }
 };
 
-const MovieCredits = async id => {
+const MovieCredits = async (id: string) => {
   try {
     const {
       data: { cast },
@@ -49,7 +49,7 @@ const MovieCredits = async id => {
   }
 };
 
-const MovieReviews = async id => {
+const MovieReviews = async (id: string) => {
   try {
     const {
       data: { results },
@@ -61,7 +61,7 @@ const MovieReviews = async id => {
   }
 };
 
-const SearchMovie = async (query, page) => {
+const SearchMovie = async (query: string, page: number) => {
   try {
     const { data } = await axios.get('/search/movie', {
       params: { query, page },

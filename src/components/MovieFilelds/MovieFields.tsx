@@ -1,13 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import MoviesGenresList from '../MovieGenresList';
 import './MovieFields.scss';
+
+interface Props {
+  realise: string;
+  average: number;
+  options: {
+    genres: (string & number)[] | null;
+    title: string;
+    overview: string;
+  };
+}
 
 const MovieFields = ({
   realise,
   average,
   options: { genres, title, overview },
-}) => (
+}: Props) => (
   <div className="WrapMovieFields">
     <h2 className="MovieTitle MarginPadding">{`${title} (${realise})`}</h2>
     <div className="MovieScore MarginPadding">
@@ -22,15 +31,5 @@ const MovieFields = ({
     </div>
   </div>
 );
-
-MovieFields.propTypes = {
-  realise: PropTypes.string.isRequired,
-  average: PropTypes.number.isRequired,
-  options: PropTypes.shape({
-    genres: PropTypes.array.isRequired,
-    title: PropTypes.string.isRequired,
-    overview: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default MovieFields;
