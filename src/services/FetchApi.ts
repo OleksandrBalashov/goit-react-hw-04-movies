@@ -9,7 +9,6 @@ axios.defaults.params = {
 };
 
 const TrendingMovies = async (page = 1) => {
-  console.log(page);
   try {
     const { data } = await axios.get('trending/movie/day', {
       params: { page },
