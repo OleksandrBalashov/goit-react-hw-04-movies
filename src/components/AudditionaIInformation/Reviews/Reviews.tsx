@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import FetchApi from '../../../services/FetchApi';
 import Spinner from '../../Spinner';
 import ReviewsList from './ReviewsList';
 import ReviewsDefaultPage from './ReviewsDefaultPage';
 
-class Reviews extends Component {
-  state = {
+interface StateTypes {
+  results: any[];
+  spinner: boolean;
+}
+
+interface Paramses {
+  movieId: string;
+}
+
+interface PropTypes extends RouteComponentProps<Paramses> {}
+
+class Reviews extends Component<PropTypes, StateTypes> {
+  state: StateTypes = {
     results: [],
     spinner: false,
   };

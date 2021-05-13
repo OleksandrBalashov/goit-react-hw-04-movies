@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import FetchApi from '../../../services/FetchApi';
 import CastList from './CastList';
 import Spinner from '../../Spinner';
 import NotFound from '../../NotFound';
-import PropTypes from 'prop-types';
 
-class Cast extends Component {
+interface Paramses {
+  movieId: string;
+}
+
+interface PropTypes extends RouteComponentProps<Paramses> {
+  options: {
+    base_url: string;
+    logo_sizes: string;
+  };
+}
+
+interface StateTypes {
+  cast: any[];
+  spinner: boolean;
+  err: boolean;
+}
+
+class Cast extends Component<PropTypes, StateTypes> {
   state = {
     cast: [],
     spinner: false,
@@ -55,9 +72,5 @@ class Cast extends Component {
     );
   }
 }
-
-Cast.propTypes = {
-  options: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
-};
 
 export default Cast;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchFormTypes } from '../../interfscesTypes/interfaces';
+import { SearchFormTypes } from '../../interfacesTypes/interfaces';
 import './MoviePageForm.scss';
 
 interface PropsType {

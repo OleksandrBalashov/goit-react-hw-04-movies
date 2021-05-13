@@ -5,14 +5,9 @@ import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import './stylesViews/HomePage.scss';
-import { ResultsType } from '../interfscesTypes/interfaces';
+import { ResultsType } from '../interfacesTypes/interfaces';
 
-interface Props extends RouteComponentProps<any> {
-  initialState: {
-    page: number;
-    spinner: boolean;
-  };
-}
+interface Props extends RouteComponentProps {}
 
 interface State {
   results: ResultsType[];
@@ -24,19 +19,13 @@ interface State {
 }
 
 class HomePage extends Component<Props, State> {
-  static defaultProps = {
-    initailState: {
-      page: 1,
-      spinner: false,
-    },
-  };
-
   state: State = {
     total_pages: 0,
     results: [],
     logo_sizes: '',
     base_url: '',
-    ...this.props.initialState,
+    page: 1,
+    spinner: false,
   };
 
   isLoading = false;
@@ -65,6 +54,7 @@ class HomePage extends Component<Props, State> {
     try {
       const movies = await FetchApi.TrendingMovies(page);
       const { results, total_pages } = movies;
+
       console.log(results);
 
       const images = await FetchApi.Configuration();
@@ -78,9 +68,9 @@ class HomePage extends Component<Props, State> {
         });
 
       !this.isLoading &&
-        this.setState(({ results: prev, page }) => ({
-          results: [...prev, ...results],
-          page: page + 1,
+        this.setState(prev => ({
+          results: [...prev.results, ...results],
+          page: prev.page + 1,
         }));
     } catch {}
 

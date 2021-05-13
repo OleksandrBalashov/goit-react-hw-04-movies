@@ -6,7 +6,7 @@ import MoviesList from '../components/MoviesList';
 import Spinner from '../components/Spinner';
 import Button from '../components/Button';
 import NotFound from '../components/NotFound';
-import { SearchFormTypes } from '../interfscesTypes/interfaces';
+import { SearchFormTypes } from '../interfacesTypes/interfaces';
 import './stylesViews/MoviePage.scss';
 
 interface PropTypes extends RouteComponentProps {}

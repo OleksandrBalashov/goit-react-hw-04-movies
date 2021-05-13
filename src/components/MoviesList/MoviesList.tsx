@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import AppRoutes from '../../routes/AppRoutes';
 import '../MoviesList/MoviesList.scss';
-import { ResultsType } from '../../interfscesTypes/interfaces';
+import { ResultsType } from '../../interfacesTypes/interfaces';
 
 const defaultSrc = 'https://media.comicbook.com/files/img/default-movie.png';
 

@@ -1,8 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { ResultsType } from '../../../../interfacesTypes/interfaces';
 import './ReviewsList.scss';
 
-const ReviewsList = ({ results }) => (
+interface PropTypes {
+  results: ResultsType[];
+}
+
+const ReviewsList = ({ results }: PropTypes) => (
   <ul className="ReviewsList">
     {results.map(({ id, author, content }) => (
       <li key={id} className="ReviewsItem">
@@ -12,15 +16,5 @@ const ReviewsList = ({ results }) => (
     ))}
   </ul>
 );
-
-ReviewsList.propTypes = {
-  results: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-    }),
-  ),
-};
 
 export default ReviewsList;
