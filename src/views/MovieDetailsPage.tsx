@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Location } from 'history';
+
 import { StaticContext } from 'react-router';
 import FetchApi from '../services/FetchApi';
 import Spinner from '../components/Spinner';
@@ -17,11 +17,15 @@ interface Paramses {
   movieId: string;
 }
 
-// type LocationState = {
-//   from: Location;
-// };
+type LocationState = {
+  from: {
+    pathname: string;
+    state: string;
+  };
+};
 
-interface Props extends RouteComponentProps<Paramses> {}
+interface Props
+  extends RouteComponentProps<Paramses, StaticContext, LocationState> {}
 
 interface State {
   title: string;
@@ -74,9 +78,13 @@ class MovieDetailsPage extends Component<Props, State> {
     }
 
     if (state !== null) {
-      //(state.from !== null)
-      const { pathname, state } = this.props.location.state as any;
-      this.setState({ from: pathname, searchQuery: state });
+      const { pathname, state } = this.props.location.state.from;
+
+      let newState = '';
+
+      if (state) newState = Object.values(state)[0];
+
+      this.setState({ from: pathname, searchQuery: newState });
     }
 
     this.fetchMovieDetails();
@@ -162,7 +170,7 @@ class MovieDetailsPage extends Component<Props, State> {
 
     history.push({
       pathname: from,
-      state: searchQuery,
+      search: searchQuery,
     });
   };
 

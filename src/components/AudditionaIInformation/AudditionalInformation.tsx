@@ -1,12 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Navigation from '../Navigation';
 import AudditionalRoutes from '../../routes/AudditionalRoutes';
 import NavigationRoute from '../Navigation/NavigationRoute';
 import './AudditionalInformation.scss';
 
-const AudditionalInformation = props => {
+interface Props extends RouteComponentProps {
+  options: {
+    base_url: string;
+    logo_sizes: string;
+  };
+}
+
+const AudditionalInformation = (props: Props) => {
   const {
     options: { base_url, logo_sizes },
   } = props;
@@ -29,12 +35,6 @@ const AudditionalInformation = props => {
       />
     </>
   );
-};
-
-AudditionalInformation.propTypes = {
-  props: PropTypes.shape({
-    options: PropTypes.objectOf(PropTypes.string).isRequired,
-  }),
 };
 
 export default withRouter(AudditionalInformation);

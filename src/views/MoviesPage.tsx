@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import FetchApi from '../services/FetchApi';
 import MoviePageForm from '../components/MoviePageForm';
 import MoviesList from '../components/MoviesList';
 import Spinner from '../components/Spinner';
 import Button from '../components/Button';
 import NotFound from '../components/NotFound';
+import { SearchFormTypes } from '../interfscesTypes/interfaces';
 import './stylesViews/MoviePage.scss';
 
-class MoviesPage extends Component {
+interface PropTypes extends RouteComponentProps {}
+
+interface StateTypes {
+  searchQuery: string;
+  total_pages: number;
+  page: number;
+  results: any[];
+  base_url: string;
+  logo_sizes: string;
+  spinner: boolean;
+  error: boolean;
+  btnLoadMore: boolean;
+}
+
+class MoviesPage extends Component<PropTypes, StateTypes> {
   state = {
     searchQuery: '',
     page: 1,
+    total_pages: 0,
     results: [],
-    base_url: null,
-    logo_sizes: null,
+    base_url: '',
+    logo_sizes: '',
     spinner: false,
     error: false,
     btnLoadMore: true,
@@ -22,18 +39,18 @@ class MoviesPage extends Component {
   isLoading = false;
 
   componentDidMount() {
-    const { state: searchQuery, search, hash } = this.props.location;
+    const { search, hash } = this.props.location;
 
-    if (hash !== '' && hash !== this.state.page) {
+    if (hash !== '' && Number(hash.slice(1)) > this.state.page) {
       this.props.history.push('/');
     }
 
-    searchQuery
-      ? this.setState({ ...searchQuery })
+    !search.includes('query=')
+      ? this.setState({ searchQuery: search.slice(1) })
       : this.setState({ searchQuery: search.slice(7) });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: PropTypes, prevState: StateTypes) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchMovie();
     }
@@ -90,7 +107,7 @@ class MoviesPage extends Component {
     this.setState(({ spinner }) => ({ spinner: !spinner }));
   };
 
-  handleSubmit = searchQuery => {
+  handleSubmit = (searchQuery: SearchFormTypes) => {
     this.setState({ ...searchQuery, page: 1, results: [] });
   };
 

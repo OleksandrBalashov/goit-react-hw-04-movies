@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
+import { SearchFormTypes } from '../../interfscesTypes/interfaces';
 import './MoviePageForm.scss';
 
-class MoviePageForm extends Component {
+interface PropsType {
+  onSubmitForm(searchQuery: SearchFormTypes): void;
+}
+
+class MoviePageForm extends Component<PropsType> {
   state = {
     searchQuery: '',
   };
 
-  handleChangeInput = e => {
+  handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     this.setState({ searchQuery: value });
   };
 
-  handlerSubmitForm = e => {
+  handlerSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     this.props.onSubmitForm(this.state);
